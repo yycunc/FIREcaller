@@ -1,0 +1,6 @@
+FIREcaller News
+
+FIREcaller 0.99.0 (Release date: 2019-04-08):
+  
+  * First offical release
+* Now it can only work on Window, Mac and Linux platforms

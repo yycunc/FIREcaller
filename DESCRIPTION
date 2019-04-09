@@ -1,0 +1,19 @@
+Package: FIREcaller
+Type: Package
+Title: FIREcaller: an R package for detecting frequently interacting re-gions from Hi-C data
+Version: 0.99.0
+Author: c(person("Cheynna", "Crowley", email = "cacrowle@live.unc.edu", role = c("aut", "cre")),
+             person("Yuchen", "Yang", email = "yyuchen@email.unc.edu", role = c("aut")),
+             person("Ming", "Hu", email = "afhuming@gmail.com", role = c("aut")),
+             person("Yun", "Li", email = "yunli@med.unc.edu", role = c("aut")))
+Maintainer: Cheynna Crowley <cacrowle@live.unc.edu>
+Description: This function FIREcaller is a user-friendly R package for detecting FIREs from Hi-C data. FIREcaller takes raw Hi-C contact matrix as input, performs within-sample and cross-sample normaliza-tion via HiCNormCis and quantile normalization respectively, and outputs FIRE scores, FIREs and super-FIREs.
+Depends: R (>= 3.4.3)
+License: GPL-3
+Imports: MASS, preprocessCore, data.table, stats, utils
+Suggests: knitr
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr
+biocViews: Software, Genetics, GUI

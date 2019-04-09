@@ -12,7 +12,7 @@ April 08, 2018
 ## Installation
 You can install FIREcaller from github with:
 ```{r install}
-install.packages("devtools)
+install.packages("devtools")
 
 devtools::install_github("yycunc/FIREcaller")
 ```

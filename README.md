@@ -55,28 +55,28 @@ Hippo_chr1[100:110,100:110]
 
 #### Define the genome build
 
-Users are required to define the genome build type. It can be "HG19" or "GRCH38" for human data, and "MM9" or "MM10" for mouse data. If missing, an error message is returned.
+Users are required to define the genome build type. It can be "hg19" or "GRCh38" for human data, and "mm9" or "mm10" for mouse data. If missing, an error message is returned.
 
 ```{r define the genome build, message=FALSE}
-gb<-'HG19'
+gb<-'hg19'
 ```
 
 #### Define the name of the mappability file
 
-There are some mappability files of different genome build (HG19, GRCH38, MM9 and MM10) and different resolutions (10 kb and 40 kb) available in [YunJiang's website](http://enhancer.sdsc.edu/yunjiang/resources/genomic_features/).
+There are some mappability files of different genome build (hg19, GRCh38, mm9 and mm10) and different resolutions (10 kb and 40 kb) available in [YunJiang's website](http://enhancer.sdsc.edu/yunjiang/resources/genomic_features/).
 
 The mappability file needs to be in the format of column names as =c('chr','start', 'end', 'F', 'GC','M'), and the chromosome column needs to be in the format 'chr${number}'.
 
 ```{r define the name of the mappability file, message=FALSE}
-map_file<-'F_GC_M_HIND3_40KB_HG19.txt.gz'
+map_file<-'F_GC_M_HindIII_40KB_hg19.txt.gz'
 ```
 
 Here is an example for the required format of the mappability file
 
 ```{r an example for the required format of the mappability file, message=FALSE}
 # The format of mappability file
-F_GC_M_HIND3_40KB_HG19 = read.table("F_GC_M_HIND3_40KB_HG19.txt.gz", header = TRUE)
-head(F_GC_M_HIND3_40KB_HG19)
+F_GC_M_HindIII_40KB_hg19 = read.table("F_GC_M_HindIII_40KB_hg19.txt.gz", header = TRUE)
+head(F_GC_M_HindIII_40KB_hg19)
 ```
 
 Users can also use their own mappability file in the same format.

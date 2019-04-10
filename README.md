@@ -63,7 +63,7 @@ gb<-'hg19'
 
 #### Define the name of the mappability file
 
-There are some mappability files of different genome build (hg19, GRCh38, mm9 and mm10) and different resolutions (10 kb and 40 kb) available in [YunJiang's website](http://enhancer.sdsc.edu/yunjiang/resources/genomic_features/).
+There are some mappability files of different genome build (hg19, GRCh38, mm9 and mm10) and different resolutions (10 kb and 40 kb) available in [Yunjiang's website](http://enhancer.sdsc.edu/yunjiang/resources/genomic_features/).
 
 The mappability file needs to be in the format of column names as =c('chr','start', 'end', 'F', 'GC','M'), and the chromosome column needs to be in the format 'chr${number}'.
 
@@ -84,10 +84,10 @@ Users can also use their own mappability file in the same format.
 #### Define whether to remove MHC region
 
 The MHC regions defined in the R package are:<br/>
-hg19 chr6  28477797-33448354
-GRCh38 chr6  28510120-33480577
-mm9 chr17 33888191-35744546, 36230820-38050373
-mm10 chr17 33681276-38548659
+hg19 chr6  28477797-33448354<br/>
+GRCh38 chr6  28510120-33480577<br/>
+mm9 chr17 33888191-35744546, 36230820-38050373<br/>
+mm10 chr17 33681276-38548659<br/>
 
 The default setting is "TRUE"", that is, to remove the MHC region.
 

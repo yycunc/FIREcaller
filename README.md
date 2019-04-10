@@ -38,7 +38,7 @@ setwd('~/Documents/Schmitt_Hippo_40KB_input/')
 
 #### Hi-C input file
 
-The Hi-C input file *prefix.list* is defined according to the naming convention of the NxN matrices. The HiC Input files need to be sample and chromosome-specific NxN contact frequency matrix with no row name and no column name.The files for the contact matrices must have the naming convention "\${prefix}_chr\${number}.gz"
+The Hi-C input file *prefix.list* is defined according to the naming convention of the NxN matrices. The HiC Input files need to be sample and chromosome-specific NxN contact frequency matrix with no row name and no column name.The files for the contact matrices must have the naming convention "\${prefix}_chr\${number}.gz".
 
 ```{r define the prefix.list according to the naming convention of the NxN matrices, warning=FALSE}
 prefix.list <- c('Hippo')
@@ -71,7 +71,7 @@ The mappability file needs to be in the format of column names as =c('chr','star
 map_file<-'F_GC_M_HindIII_40KB_hg19.txt.gz'
 ```
 
-Here is an example for the required format of the mappability file
+Here is an example for the required format of the mappability file.
 
 ```{r an example for the required format of the mappability file, message=FALSE}
 # The format of mappability file
@@ -83,7 +83,7 @@ Users can also use their own mappability file in the same format.
 
 #### Define whether to remove MHC region
 
-The MHC regions defined in the R package are:
+The MHC regions defined in the R package are:\n
 hg19 chr6  28477797-33448354
 GRCh38 chr6  28510120-33480577
 mm9 chr17 33888191-35744546, 36230820-38050373

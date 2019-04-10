@@ -83,7 +83,13 @@ Users can also use their own mappability file in the same format.
 
 #### Define whether to remove MHC region
 
-The default setting is "TRUE"", that is, to remove the MHC region 
+The MHC regions defined in the R package are:
+hg19 chr6  28477797-33448354
+GRCh38 chr6  28510120-33480577
+mm9 chr17 33888191-35744546, 36230820-38050373
+mm10 chr17 33681276-38548659
+
+The default setting is "TRUE"", that is, to remove the MHC region.
 
 ```{r define whether to remove MHC region, message=FALSE}
 rm_mhc <- TRUE

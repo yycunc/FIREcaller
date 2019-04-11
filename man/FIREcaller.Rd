@@ -4,7 +4,7 @@
 \alias{FIREcaller}
 \title{FIREcaller: an R package for detecting frequently interacting re-gions from Hi-C data}
 \usage{
-FIREcaller(prefix.list=(...), gb=c("GRCH38","HG19","MM9","MM10"), map_file="", rm_mhc=c("TRUE","FALSE"))
+FIREcaller(prefix.list=(...), gb=c("hg19","GRCh38","mm9","mm10"), map_file="", rm_mhc=c("TRUE","FALSE"))
 }
 \arguments{
 \item{prefix.list}{a list of samples that correspond to the names of the gzipped files.}
@@ -44,10 +44,10 @@ setwd('~/Document/Schmitt_Hippo_40KB_input/')
 prefix.list <- c('Hippo')
 
 #define the genome build
-gb<-'HG19'
+gb<-'hg19'
 
 #define the name of the mappability file
-map_file<-'F_GC_M_HIND3_40KB_HG19.txt.gz'
+map_file<-'F_GC_M_HindIII_40KB_hg19.txt.gz'
 
 #define whether to remove MHC region; default=TRUE
 rm_mhc <- TRUE

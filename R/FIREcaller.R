@@ -6,7 +6,7 @@
 #' @description This function FIREcaller is a user-friendly R package for detecting FIREs from Hi-C data. 
 #' FIREcaller takes raw Hi-C contact matrix as input, performs within-sample and cross-sample normaliza-tion via 
 #' HiCNormCis and quantile normalization respectively, and outputs FIRE scores, FIREs and super-FIREs.
-#' @usage FIREcaller(prefix.list=(...), gb=c("GRCH38","HG19","MM9","MM10"), map_file="", rm_mhc=c("TRUE","FALSE"))
+#' @usage FIREcaller(prefix.list=(...), gb=c("hg19","GRCh38","mm9","mm10"), map_file="", rm_mhc=c("TRUE","FALSE"))
 #' @param prefix.list a list of samples that correspond to the names of the gzipped files.
 #' @param gb a string that defines the genome build type.If missing, an error message is returned.
 #' @param map_file a string that defines the name of the mappability file specific to the samples genome build, restriction enzyme, and resolution. See read me for format.
@@ -34,16 +34,16 @@
 #' @importFrom utils read.table
 #' @examples
 #' # set working directory: the location of the NxN matrices and mappability files
-#' setwd('~/Document/Schmitt_Hippo_40KB_input/')
+#' setwd('~/Documents/Schmitt_Hippo_40KB_input/')
 #' 
 #' # define the prefix.list according to the naming convention of the NxN matrices
 #' prefix.list <- c('Hippo')
 #' 
 #' #define the genome build
-#' gb<-'HG19'
+#' gb<-'hg19'
 #' 
 #' #define the name of the mappability file
-#' map_file<-'F_GC_M_HIND3_40KB_HG19.txt.gz'
+#' map_file<-'F_GC_M_HindIII_40KB_hg19.txt.gz'
 #' 
 #' #define whether to remove MHC region; default=TRUE
 #' rm_mhc <- TRUE
@@ -173,10 +173,10 @@ filter_count <- function(file, rm_mhc, bin_num, gb, res){
 }
 
 remove_mhc <- function(y, gb, res){
-  if(gb == 'HG19'){y2 <- mhc_hg19(y, res)}
-  if(gb == 'grch38'){y2 <- mhc_grch38(y, res)}
-  if(gb == 'mm9'){y2 <- mhc_mm9(y, res)}
-  if(gb == 'mm10'){y2 <- mhc_mm10(y, res)}
+  if(toupper(gb) == 'HG19'){y2 <- mhc_hg19(y, res)}
+  if(toupper(gb) == 'GRCH38'){y2 <- mhc_grch38(y, res)}
+  if(toupper(gb) == 'MM9'){y2 <- mhc_mm9(y, res)}
+  if(toupper(gb) == 'MM10'){y2 <- mhc_mm10(y, res)}
   return(y2)
 }
 

@@ -51,7 +51,7 @@
 #' #run the function
 #' FIREcaller(prefix.list, gb, map_file, rm_mhc)
 #' @export
-FIREcaller <- function(prefix.list, gb, map_file, rm_mhc){
+FIREcaller <- function(prefix.list, gb, map_file, rm_mhc = TRUE){
   options(scipen = 999)
 
   ref_file <- read.table(map_file, header = TRUE)
@@ -282,39 +282,37 @@ Super_Fire <- function(final_fire, res, prefix.list){
     final <- NULL
     for(chrid in 1:22){
       u <- z[ z[,1] == paste('chr',chrid,sep=''),]
-      out <- NULL
-      start <- u[1, 2]
-      end <- u[1, 3]
-      for(i in 1: (nrow(u)-1) )
-      {
-        if(abs(end - u[i+1, 2]) <= res)
-        {
-          end <- u[i+1, 3]
+      if(nrow(u)>2){
+        out <- NULL
+        start <- u[1, 2]
+        end <- u[1, 3]
+        for(i in 1: (nrow(u)-1) ){
+          if(abs(end - u[i+1, 2]) <= res){
+            end <- u[i+1, 3]
+          }
+          
+          if(abs(end - u[i+1,2]) > res){
+            out <- rbind(out, c(start, end))
+            start <- u[i+1, 2]
+            end <- u[i+1, 3]
+          }
+          if(end == u[nrow(u), 3]){
+            out <- rbind(out, c(start, end))
+          }
         }
-        if(abs(end - u[i+1,2]) > res)
-        {
-          out <- rbind(out, c(start, end))
-          start <- u[i+1, 2]
-          end <- u[i+1, 3]
+
+        SFscore <- rep(0, nrow = nrow(out))
+        for(i in 1:nrow(out)){
+          tmp <- u[u[,2] >= out[i,1] & u[,3] <= out[i,2],]
+          SFscore[i] <- sum(tmp[,4])
         }
-        if(end == u[nrow(u), 3])
-        {
-          out <- rbind(out, c(start, end))
-        }
+
+        sf <- cbind(rep(chrid, nrow(out)), out, SFscore)
+        sf <- as.data.frame(sf)
+        colnames(sf)<-c('chr', 'start', 'end', 'cum_FIRE_score')
+
+        final <- rbind(final, sf)
       }
-
-      SFscore <- rep(0, nrow = nrow(out))
-      for(i in 1:nrow(out))
-      {
-        tmp <- u[u[,2] >= out[i,1] & u[,3] <= out[i,2],]
-        SFscore[i] <- sum(tmp[,4])
-      }
-
-      sf <- cbind(rep(chrid, nrow(out)), out, SFscore)
-      sf <- as.data.frame(sf)
-      colnames(sf)<-c('chr', 'start', 'end', 'cum_FIRE_score')
-
-      final <- rbind(final, sf)
     }
     x <- final
     y <- sort(x[,4])

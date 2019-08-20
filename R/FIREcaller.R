@@ -264,7 +264,7 @@ Fire_Call <- function(file, prefix.list, binsize){
 }
 
 Super_Fire <- function(final_fire, res, prefix.list){
-  length_pl <- length(prefix.list)
+  length_pl <- as.numeric(length(prefix.list))
   NP <- final_fire[, c(1:3,(3+1+length_pl):(3+2*length_pl))]
   colnames(NP) <- c('chr', 'start', 'end', prefix.list)
   ID <- final_fire[, c(1:3,(1+3+2*length_pl):ncol(final_fire))]
@@ -284,19 +284,19 @@ Super_Fire <- function(final_fire, res, prefix.list){
       u <- z[ z[,1] == paste('chr',chrid,sep=''),]
       if(nrow(u)>2){
         out <- NULL
-        start <- u[1, 2]
-        end <- u[1, 3]
+        start <- as.numeric(u[1, 2])
+        end <- as.numeric(u[1, 3])
         for(i in 1: (nrow(u)-1) ){
-          if(abs(end - u[i+1, 2]) <= res){
-            end <- u[i+1, 3]
+          if(abs(end - as.numeric(u[i+1, 2])) <= res){
+            end <- as.numeric(u[i+1, 3])
           }
           
-          if(abs(end - u[i+1,2]) > res){
+          if(abs(end - as.numeric(u[i+1,2])) > res){
             out <- rbind(out, c(start, end))
-            start <- u[i+1, 2]
-            end <- u[i+1, 3]
+            start <- as.numeric(u[i+1, 2])
+            end <- as.numeric(u[i+1, 3])
           }
-          if(end == u[nrow(u), 3]){
+          if(end == as.numeric(u[nrow(u), 3])){
             out <- rbind(out, c(start, end))
           }
         }

@@ -10,7 +10,7 @@ April 08, 2019
   + It can work on Window, Mac and Linux platforms
 
 Sep 4, 2019
-* Version 1.00.1 released
+* Version 1.00 released
   + The Default value of "rm_mhc" is set to "TRUE" instead of "NULL"
   + Fixing an error in SuperFIRE calling
   

@@ -4,11 +4,16 @@ FIREcaller: an R package for detecting frequently interacting re-gions from Hi-C
 FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu] and Yuchen Yang [yyuchen@email.unc.edu]
 
 ## News and Updates
-April 08, 2018
+April 08, 2019
 * Version 0.99.0 released
   + First offical release
   + It can work on Window, Mac and Linux platforms
 
+Sep 4, 2019
+* Version 1.00.1 released
+  + Fixing an error in Seurat clustering to allow more than 20 PCs computed
+  + Fixing an error in SuperFIRE calling
+  
 ## Installation
 You can install FIREcaller from github with:
 ```{r install}

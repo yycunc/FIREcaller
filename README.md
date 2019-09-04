@@ -11,7 +11,7 @@ April 08, 2019
 
 Sep 4, 2019
 * Version 1.00.1 released
-  + Fixing an error in Seurat clustering to allow more than 20 PCs computed
+  + The Default value of "rm_mhc" is set to "TRUE" instead of "NULL"
   + Fixing an error in SuperFIRE calling
   
 ## Installation

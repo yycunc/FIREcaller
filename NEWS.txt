@@ -3,4 +3,9 @@ FIREcaller News
 FIREcaller 0.99.0 (Release date: 2019-04-08):
   
   * First offical release
-* Now it can only work on Window, Mac and Linux platforms
+  * Now it can only work on Window, Mac and Linux platforms
+
+FIREcaller 1.00 (Release date: 2019-09-04):
+
+  * The Default value of "rm_mhc" is set to "TRUE" instead of "NULL"
+  * Fixing an error in SuperFIRE calling

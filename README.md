@@ -4,16 +4,16 @@ FIREcaller: an R package for detecting frequently interacting re-gions from Hi-C
 FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu] and Yuchen Yang [yyuchen@email.unc.edu]
 
 ## News and Updates
+Sep 4, 2019
+* Version 1.00 released
+  + The Default value of "rm_mhc" is set to "TRUE" instead of "NULL"
+  + Fixing an error in SuperFIRE calling
+
 April 08, 2019
 * Version 0.99.0 released
   + First offical release
   + It can work on Window, Mac and Linux platforms
 
-Sep 4, 2019
-* Version 1.00 released
-  + The Default value of "rm_mhc" is set to "TRUE" instead of "NULL"
-  + Fixing an error in SuperFIRE calling
-  
 ## Installation
 You can install FIREcaller from github with:
 ```{r install}

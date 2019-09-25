@@ -2,8 +2,8 @@ FIREcaller News
 
 FIREcaller 1.10 (Release date: 2019-09-25):
 
-  * Loose the filtering criterion for "bad bins" to that a bin will removed if 25% of its neighboring bins are "bad".
-  * Fixing an error that cause a lack of convergence
+  * Loosened the criterion for a "bad bin". Previously, a bin is considered to be bad if ANY of its neighboring bins within 200kb is bad. Now loosened to allow <=25% bad neighboring bins.
+  * Fixed an error that caused a lack of convergence.
 
 
 FIREcaller 1.00 (Release date: 2019-09-04):

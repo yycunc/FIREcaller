@@ -6,7 +6,7 @@ FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu] and Yuchen Y
 ## News and Updates
 Sep 25, 2019
 * Version 1.10 released
-  + Loose the filtering criterion for "bad bins" to that a bin will removed if 25% of its neighboring bins are "bad".
+  + Loosened the criterion for a "bad bin". Previously, a bin is considered to be bad if ANY of its neighboring bins within 200kb is bad. Now loosened to allow <=25% bad neighboring bins.
   + Fixing an error that cause a lack of convergence
 
 Sep 4, 2019

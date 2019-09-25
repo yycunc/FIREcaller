@@ -1,5 +1,11 @@
 FIREcaller News
 
+FIREcaller 1.10 (Release date: 2019-09-25):
+
+  * Loose the filtering criterion for "bad bins" to that a bin will removed if 25% of its neighboring bins are "bad".
+  * Fixing an error that cause a lack of convergence
+
+
 FIREcaller 1.00 (Release date: 2019-09-04):
 
   * The Default value of "rm_mhc" is set to "TRUE" instead of "NULL".

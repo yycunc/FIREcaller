@@ -7,17 +7,17 @@ FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu] and Yuchen Y
 Sep 25, 2019
 * Version 1.10 released
   + Loosened the criterion for a "bad bin". Previously, a bin is considered to be bad if ANY of its neighboring bins within 200kb is bad. Now loosened to allow <=25% bad neighboring bins.
-  + Fixing an error that cause a lack of convergence
+  + Fixed an error that caused a lack of convergence.
 
 Sep 4, 2019
 * Version 1.00 released
-  + The Default value of "rm_mhc" is set to "TRUE" instead of "NULL"
-  + Fixing an error in SuperFIRE calling
+  + The Default value of "rm_mhc" is set to "TRUE" instead of "NULL"。
+  + Fixing an error in SuperFIRE calling。
 
 April 08, 2019
 * Version 0.99.0 released
-  + First offical release
-  + It can work on Window, Mac and Linux platforms
+  + First offical release。
+  + It can work on Window, Mac and Linux platforms。
 
 ## Installation
 You can install FIREcaller from github with:

@@ -5,7 +5,7 @@ FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu] and Yuchen Y
 
 ## News and Updates
 Sep 25, 2019
-* Version 1.00 released
+* Version 1.10 released
   + Loose the filtering criterion for "bad bins" to that a bin will removed if 25% of its neighboring bins are "bad".
   + Fixing an error that cause a lack of convergence
 

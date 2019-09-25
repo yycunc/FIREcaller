@@ -6,7 +6,7 @@ FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu] and Yuchen Y
 ## News and Updates
 Sep 25, 2019
 * Version 1.00 released
-  + The Default value of "rm_mhc" is set to "TRUE" instead of "NULL"
+  + Loose the filtering criterion for "bad bins" to that a bin will removed if 25% of its neighboring bins are "bad".
   + Fixing an error that cause a lack of convergence
 
 Sep 4, 2019

@@ -146,30 +146,52 @@ calculate_cis <- function(matrix, chr, bin_num, sample, ref_file_chr, length){
 }
 
 filter_count <- function(file, rm_mhc, bin_num, gb, res){
+  options(scipen = 999)
+  
   y <- file
 
-  # filter 1: remove F=0,GC=0 or M=0
-  y_flag <- which(y$F == 0 | y$GC == 0 | y$M == 0)
+  # filter 1: find bad bins-- F=0, GC=0 or M=0
+  y_flag <- 0
+  y_flag <- ifelse(y$F == 0 | y$GC == 0 | y$M == 0, 1, 0)
 
-  # filter 2: remove bad bins of F=0,GC=0 or M=0
-  y_bad <- NULL
-  for (j in -bin_num:bin_num) {
-    y_bad <- c(y_bad, y_flag + j)
+  # filter 2: find neighbor bins
+  y2 <- y
+  y2$bad_neig <- 0
+  
+  for(i in 1:nrow(y2)){
+    if((i >= bin_num) & (i + bin_num <= nrow(y))){
+      y2$bad_neig[i] <- sum(y2[c((i - bin_num):(i - 1),((i + 1):(i + bin_num))),"flag"])
+    }
+    if(i < bin_num){
+      y2$bad_neig[i] <- sum(y2[c((1:(i - 1)),((i + 1):(i + bin_num))),"flag"])
+    }
+    if((i + bin_num) > nrow(y2)){
+      y2$bad_neig[i]<-sum(y2[c(((i - bin_num):(i - 1)),((i + 1):nrow(y2))),"flag"])
+    }
   }
-  y_bad <- y_bad[y_bad >= 1]
-  y_bad <- y_bad[y_bad <= nrow(y)]
-  y4 <- y[-unique(y_bad),]
+  
+  #find percentage of bad bins of
+  y2$perc <- y2$bad_neig/(2 * bin_num)
+  
+  #remove the bad bins and if 25 percent of the neighbooring bins are "bad"
+  y3 <- y2[y2$flag == 0,]
+  y4 <- y3[y3$perc <= 0.25,] 
 
   # filter 3: remove if Mapp<0.9
   y5 <- y4[y4$M > 0.9,]
 
+  #remove the last two columns
+  n1 <- ncol(y5)
+  n2 <- n1-2
+  y6 <- y5[,-c(n2:n1)]
+  
   #filter 4: MHC regions
   if(rm_mhc == TRUE){
-    y6 <- remove_mhc(y5, gb, res)
+    y7 <- remove_mhc(y6, gb, res)
   } else{
-    y6 <- y5
+    y7 <- y6
   }
-  return(y6)
+  return(y7)
 }
 
 remove_mhc <- function(y, gb, res){
@@ -276,8 +298,8 @@ Super_Fire <- function(final_fire, res, prefix.list){
     x0 <- ID[, c(1:3, INDEX) ]
     y0 <- NP[, c(1:3, INDEX) ]
 
-    x <- x0[x0[,4]==1,]
-    z <- y0[x0[,4]==1,]
+    x <- x0[x0[,4] == 1,]
+    z <- y0[x0[,4] == 1,]
 
     final <- NULL
     for(chrid in 1:22){

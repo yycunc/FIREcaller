@@ -11,13 +11,13 @@ Sep 25, 2019
 
 Sep 4, 2019
 * Version 1.00 released
-  + The Default value of "rm_mhc" is set to "TRUE" instead of "NULL"。
-  + Fixing an error in SuperFIRE calling。
+  + The Default value of "rm_mhc" is set to "TRUE" instead of "NULL".
+  + Fixing an error in SuperFIRE calling.
 
 April 08, 2019
 * Version 0.99.0 released
-  + First offical release。
-  + It can work on Window, Mac and Linux platforms。
+  + First offical release.
+  + It can work on Window, Mac and Linux platforms.
 
 ## Installation
 You can install FIREcaller from github with:

@@ -1,7 +1,7 @@
 # FIREcaller
 FIREcaller: an R package for detecting frequently interacting re-gions from Hi-C data
 
-FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu] and Yuchen Yang [yyuchen@email.unc.edu]
+FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu], Yuchen Yang [yyuchen@email.unc.edu] and Yun Li [yun_li@med.unc.edu].
 
 ## News and Updates
 Sep 25, 2019

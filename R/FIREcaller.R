@@ -1,5 +1,5 @@
 # !/usr/bin/env Rscript
-# 21/10/2019
+# 10/21/2019
 #
 #' @title FIREcaller: an R package for detecting frequently interacting re-gions from Hi-C data
 #'

@@ -4,7 +4,7 @@ FIREcaller: an R package for detecting frequently interacting re-gions from Hi-C
 FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu], Yuchen Yang [yyuchen@email.unc.edu] and Yun Li [yun_li@med.unc.edu].
 
 ## News and Updates
-Sep 25, 2019
+Oct 21, 2019
 * Version 1.10 released
   + Loosened the criterion for a "bad bin". Previously, a bin is considered to be bad if ANY of its neighboring bins within 200kb is bad. Now loosened to allow <=25% bad neighboring bins.
   + Fixed an error that caused a lack of convergence.

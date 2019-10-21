@@ -1,5 +1,5 @@
 # !/usr/bin/env Rscript
-# 04/08/2019
+# 25/09/2019
 #
 #' @title FIREcaller: an R package for detecting frequently interacting re-gions from Hi-C data
 #'
@@ -149,10 +149,9 @@ filter_count <- function(file, rm_mhc, bin_num, gb, res){
   options(scipen = 999)
   
   y <- file
-
   # filter 1: find bad bins-- F=0, GC=0 or M=0
-  y_flag <- 0
-  y_flag <- ifelse(y$F == 0 | y$GC == 0 | y$M == 0, 1, 0)
+  y$flag <- 0
+  y$flag <- ifelse(y$F == 0 | y$GC == 0 | y$M == 0, 1, 0)
 
   # filter 2: find neighbor bins
   y2 <- y

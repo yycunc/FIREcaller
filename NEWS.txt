@@ -1,5 +1,10 @@
 FIREcaller News
 
+Python version of FIREcaller released by Jakub Lipiński (2020-02-17):
+
+  * https://github.com/jakublipinski/python-FIREcaller
+
+
 FIREcaller 1.10 (Release date: 2019-10-21):
 
   * Loosened the criterion for a "bad bin". Previously, a bin is considered to be bad if ANY of its neighboring bins within 200kb is bad. Now loosened to allow <=25% bad neighboring bins.

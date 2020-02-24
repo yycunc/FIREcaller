@@ -32,7 +32,7 @@ devtools::install_github("yycunc/FIREcaller")
 ```
 
 Or you can install a python version of FIREcaller from github page
-https://github.com/jakublipinski/python-FIREcaller
+https://github.com/jakublipinski/python-FIREcaller.
 
 ## FIREcaller Examples
 

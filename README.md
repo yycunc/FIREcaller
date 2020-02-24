@@ -31,6 +31,9 @@ install.packages("devtools")
 devtools::install_github("yycunc/FIREcaller")
 ```
 
+Or you can install a python version of FIREcaller from github page
+https://github.com/jakublipinski/python-FIREcaller
+
 ## FIREcaller Examples
 
 In this tutorial, we will analyze Hippocampus dataset from Schmitt *et al*., (Cell Reports, 2016), which contains Hi-C contact matrix of 22 autosomes from human Hippocampus. Hi-C input files and the mappability file can be downloaded from [Yun Li Group website](https://yunliweb.its.unc.edu/FIREcaller/download.php).

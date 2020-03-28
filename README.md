@@ -131,3 +131,6 @@ head(FIRE_output)
 SuperFIRE_output = read.table("super_FIRE_call_Hippo.txt", header = T)
 head(SuperFIRE_output)
 ```
+
+## Citation
+Crowley, C., Yang, Y., Qiu, Y., Hu, B., Won, H., Ren, B., Hu, M., Li, Y. FIREcaller: an R package for detecting frequently interacting regions from Hi-C data. *bioRxiv*, doi: https://doi.org/10.1101/619288.

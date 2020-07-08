@@ -8,6 +8,7 @@ June 30, 2020
 * Version 1.2.0 released
   + Allows for upper triangular and symmetric matrices as input
   + Allows the option to include chrX
+  
 Feb 17, 2020
 * Python version released by Jakub Lipiński
   + https://github.com/jakublipinski/python-FIREcaller

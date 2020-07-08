@@ -4,6 +4,10 @@ FIREcaller: an R package for detecting frequently interacting re-gions from Hi-C
 FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu], Yuchen Yang [yyuchen@email.unc.edu] and Yun Li [yun_li@med.unc.edu].
 
 ## News and Updates
+June 30, 2020
+* Version 1.2.0 released
+  + Allows for upper triangular and symmetric matrices as input
+  + Allows the option to include chrX
 Feb 17, 2020
 * Python version released by Jakub Lipiński
   + https://github.com/jakublipinski/python-FIREcaller

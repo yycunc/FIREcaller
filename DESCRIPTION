@@ -1,7 +1,8 @@
 Package: FIREcaller
 Type: Package
-Title: FIREcaller: an R package for detecting frequently interacting re-gions from Hi-C data
-Version: 1.10
+Title: FIREcaller: an R package for detecting frequently interacting
+        re-gions from Hi-C data
+Version: 1.20
 Author: c(person("Cheynna", "Crowley", email = "cacrowle@live.unc.edu", role = c("aut", "cre")),
              person("Yuchen", "Yang", email = "yyuchen@email.unc.edu", role = c("aut")),
              person("Ming", "Hu", email = "afhuming@gmail.com", role = c("aut")),
@@ -17,3 +18,5 @@ LazyData: true
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
 biocViews: Software, Genetics, GUI
+NeedsCompilation: no
+

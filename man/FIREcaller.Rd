@@ -56,7 +56,7 @@ rm_mhc <- TRUE
 FIREcaller(prefix.list, gb, map_file, rm_mhc)
 }
 \references{
-Cheynna Crowley, Yuchen Yang, Ming Hu, Yun Li. FIREcaller: an R package for detecting frequently interacting re-gions from Hi-C data
+Cheynna Crowley, Yuchen Yang, Ming Hu, Yun Li. FIREcaller: Detecting Frequently Interacting Regions from Hi-C Data
 }
 \seealso{
 Paper: https://doi.org/10.1016/j.celrep.2016.10.061

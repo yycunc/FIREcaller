@@ -1,5 +1,20 @@
 FIREcaller News
 
+FIREcaller 1.30 (Release date: 2020-09-20) 
+
+  * Allows user to change the cis-interacting region (200Kb by default)
+  * Allows user to pick the regression distribution (Poisson or Negative Binomial; Poisson by default)
+  * Allows the user to select the percentage of problematic bins filtered (25% by default)
+  * Added filtering of the ENCODE blacklist regions
+  * Can do single chromosomes, or full list based on the mappability file.
+
+
+FIREcaller 1.20 (Release date: 2020-20-06) 
+
+  * Allows a chrX option
+  * Allows symmetric and upper-triangular matrix as input
+
+
 Python version of FIREcaller released by Jakub Lipiński (2020-02-17):
 
   * https://github.com/jakublipinski/python-FIREcaller

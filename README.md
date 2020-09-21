@@ -37,19 +37,26 @@ April 08, 2019
   + It can work on Window, Mac and Linux platforms.
 
 ## Installation
-You can install FIREcaller from github with:
+Users can install FIREcaller from github with:
 ```{r install}
 install.packages("devtools")
 
 devtools::install_github("yycunc/FIREcaller")
 ```
 
-Or you can install a python version of FIREcaller from github page
+Or downloaded the package from https://yunliweb.its.unc.edu/FIREcaller/
+
+```{r}
+install.packages("~/FIREcaller_1.30.tar.gz",repos=NULL, type="source")
+
+```
+
+Users can also install a python version of FIREcaller from github page
 https://github.com/jakublipinski/python-FIREcaller.
 
 ## FIREcaller Examples
 
-In this tutorial, we will analyze Hippocampus dataset from Schmitt *et al*., (Cell Reports, 2016), which contains Hi-C contact matrix of 22 autosomes from human Hippocampus. Hi-C input files and the mappability file can be downloaded from [Yun Li Group website](https://yunliweb.its.unc.edu/FIREcaller/download.php).
+In this tutorial, we will analyze Hippocampus dataset from Schmitt *et al*., ([Cell Reports, 2016](https://www.cell.com/cell-reports/pdfExtended/S2211-1247(16)31481-4)). It contains 22 Hi-C contact matrix of the autosomes from human Hippocampus. Hi-C input files and the mappability file can be downloaded from [Yun Li Group website](https://yunliweb.its.unc.edu/FIREcaller/download.php).
   
 
 ### Setup the library
@@ -63,7 +70,7 @@ library("FIREcaller")
 The directory should contain Hi-C input files of all autosomes and the mappability file required for the analysis.
 
 ```{r setup for working directory}
-setwd('~/Documents/Schmitt_Hippo_40KB_input/')
+setwd('~/Desktop/FIREcaller_example')
 ```
 
 #### Hi-C input file

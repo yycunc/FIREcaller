@@ -1,8 +1,7 @@
 Package: FIREcaller
 Type: Package
-Title: FIREcaller: an R package for detecting frequently interacting
-        re-gions from Hi-C data
-Version: 1.20
+Title: FIREcaller: an R package for detecting frequently interacting regions from Hi-C data
+Version: 1.30
 Author: c(person("Cheynna", "Crowley", email = "cacrowle@live.unc.edu", role = c("aut", "cre")),
              person("Yuchen", "Yang", email = "yyuchen@email.unc.edu", role = c("aut")),
              person("Ming", "Hu", email = "afhuming@gmail.com", role = c("aut")),
@@ -15,8 +14,8 @@ Imports: MASS, preprocessCore, data.table, stats, utils
 Suggests: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 biocViews: Software, Genetics, GUI
 NeedsCompilation: no
-
+Packaged: 2020-09-21 17:11:22 UTC; Cheynna

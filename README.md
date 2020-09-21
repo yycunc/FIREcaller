@@ -4,10 +4,18 @@ FIREcaller: an R package for detecting frequently interacting re-gions from Hi-C
 FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu], Yuchen Yang [yyuchen@email.unc.edu] and Yun Li [yun_li@med.unc.edu].
 
 ## News and Updates
+Sep 20, 2020
+* Version 1.30 released
+  + Allows user to change the cis-interacting region (200Kb by default)
+  + Allows user to pick the regression distribution (Poisson or Negative Binomial; Poisson by default)
+  + Allows the user to select the percentage of problematic bins filtered (25% by default)
+  + Added filtering of the ENCODE blacklist regions
+  + Can do single chromosomes, or full list based on the mappability file.
+
 June 30, 2020
 * Version 1.2.0 released
-  + Allows for upper triangular and symmetric matrices as input
   + Allows the option to include chrX
+  + Allows symmetric and upper triangular matrices as input
   
 Feb 17, 2020
 * Python version released by Jakub Lipiński

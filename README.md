@@ -1,5 +1,5 @@
 # FIREcaller
-FIREcaller: an R package for detecting frequently interacting re-gions from Hi-C data
+FIREcaller: an R package for detecting frequently interacting regions from Hi-C data
 
 FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu], Yuchen Yang [yyuchen@email.unc.edu] and Yun Li [yun_li@med.unc.edu].
 
@@ -153,4 +153,4 @@ head(SuperFIRE_output)
 ```
 
 ## Citation
-Crowley, C., Yang, Y., Qiu, Y., Hu, B., Won, H., Ren, B., Hu, M., Li, Y. FIREcaller: an R package for detecting frequently interacting regions from Hi-C data. *bioRxiv*, doi: https://doi.org/10.1101/619288.
+Crowley, C., Yang, Y., Qiu, Y., Hu, B., Won, H., Ren, B., Hu, M., Li, Y. FIREcaller: Detecting Frequently Interacting Regions from Hi-C Data. *bioRxiv*, doi: https://doi.org/10.1101/619288.

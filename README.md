@@ -56,7 +56,7 @@ https://github.com/jakublipinski/python-FIREcaller.
 
 ## FIREcaller Examples
 
-In this tutorial, we will analyze Hippocampus dataset from Schmitt *et al*., ([Cell Reports, 2016](https://www.cell.com/cell-reports/pdfExtended/S2211-1247(16)31481-4)). It contains 22 Hi-C contact matrix of the autosomes from human Hippocampus. Hi-C input files and the mappability file can be downloaded from [Yun Li Group website](https://yunliweb.its.unc.edu/FIREcaller/download.php).
+In this tutorial, we will analyze Hippocampus dataset from Schmitt *et al*., ([Cell Reports, 2016](https://www.cell.com/cell-reports/pdfExtended/S2211-1247(16)31481-4)). It contains 22 Hi-C NxN contact matrix of the autosomal chromosomes. Hi-C input files and the mappability file can be downloaded from [Yun Li Group website](https://yunliweb.its.unc.edu/FIREcaller/download.php).
   
 
 ### Setup the library
@@ -100,20 +100,26 @@ gb<-'hg19'
 
 #### Define the name of the mappability file
 
-There are some mappability files of different genome build (hg19, GRCh38, mm9 and mm10) and different resolutions (10 kb and 40 kb) available in [Yunjiang's website](http://enhancer.sdsc.edu/yunjiang/resources/genomic_features/).
+There are some mappability files of different genome build (hg19, GRCh38, mm9 and mm10) and different resolutions (10 kb and 40 kb) available in [Yun Li's's website](https://yunliweb.its.unc.edu/FIREcaller/download.php).
 
-The mappability file needs to be in the format of column names as =c('chr','start', 'end', 'F', 'GC','M'), and the chromosome column needs to be in the format 'chr${number}'.
+The mappability file needs to be in the format of column names as =c('chr','start', 'end', 'F', 'GC','M'), and the chromosome column needs to be in the format 'chr${number}'. The chromosomes in the file need to directly relate to the chromosomes in the process. For example, the mappability file will only contain information on chromosomes 1 through 22 to do an analysis on chromosome 1 through 22.
 
 ```{r define the name of the mappability file, message=FALSE}
-map_file<-'F_GC_M_HindIII_40KB_hg19.txt.gz'
+map_file<-'Hind3_hg19_40Kb_encodeBL_F_GC_M_auto.txt.gz'
 ```
 
 Here is an example for the required format of the mappability file.
 
 ```{r an example for the required format of the mappability file, message=FALSE}
 # The format of mappability file
-F_GC_M_HindIII_40KB_hg19 = read.table("F_GC_M_HindIII_40KB_hg19.txt.gz", header = TRUE)
-head(F_GC_M_HindIII_40KB_hg19)
+Hind3_hg19_40Kb_encodeBL_F_GC_M_auto= read.table("Hind3_hg19_40Kb_encodeBL_F_GC_M_auto.txt.gz", header = TRUE)
+head(Hind3_hg19_40Kb_encodeBL_F_GC_M_auto)
+```
+
+Here is an example of the chromosomes present in the mappability file.
+
+```{r,warning=FALSE}
+unique(Hind3_hg19_40Kb_encodeBL_F_GC_M_auto$chr)
 ```
 
 Users can also use their own mappability file in the same format.
@@ -125,6 +131,13 @@ hg19 chr6  28477797-33448354<br/>
 GRCh38 chr6  28510120-33480577<br/>
 mm9 chr17 33888191-35744546, 36230820-38050373<br/>
 mm10 chr17 33681276-38548659<br/>
+
+| GB   | CHR  | BP RANGE  |
+| ---- |:---: | ---------:|
+|hg19  | chr6 |  28477797-33448354                   |
+|GRCh38| chr6 | 28510120-33480577                    |
+|mm9   |chr17 |33888191-35744546 & 36230820-38050373 |
+|mm10  |chr17 | 33681276 & 38548659                  |
 
 The default setting is "TRUE"", that is, to remove the MHC region.
 

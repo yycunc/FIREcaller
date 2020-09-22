@@ -127,10 +127,6 @@ Users can also use their own mappability file in the same format.
 #### Define whether to remove MHC region
 
 The MHC regions defined in the R package are:<br/>
-hg19 chr6  28477797-33448354<br/>
-GRCh38 chr6  28510120-33480577<br/>
-mm9 chr17 33888191-35744546, 36230820-38050373<br/>
-mm10 chr17 33681276-38548659<br/>
 
 | GB   | CHR  | BP RANGE  |
 | ---- |:---: | ---------:|
@@ -145,19 +141,50 @@ The default setting is "TRUE"", that is, to remove the MHC region.
 rm_mhc <- TRUE
 ```
 
+#### Define whether to remove the ENCODE black list regions
+
+The ENCODE blacklist regions are described [here](https://www.nature.com/articles/s41598-019-45839-z). The EBL variable in the mappability file is an indicator of whether it is a black list region (1) or not (0).
+
+```{r define whether to remove ENCODE black list regions, message=FALSE}
+rm_EBL <- TRUE
+```
+
+The default setting is "TRUE" to remove the ENCODE blacklist regions.
+
+#### Change the cis-interacting regions
+The user has the option to change the cis-interacting region threshold. Default is 200Kb.
+
+```{r define cisinteracting region, message=FALSE}
+upper_cis=200000
+```
+
+#### Change the regression distribution
+The user has the option to change the regression distribution used. The HiCNormCis method uses Poisson ("poisson") distribution, but the user can change to negative binomial ("nb")
+
+```{r change the regression distribution, message=FALSE}
+dist='poisson'
+```
+
+#### Change the filtering threshold 
+The user has the option to change the filtering threshold, where if a cis-interaction is calculated by more than 25% bins that contains a mappability of 0, a GC content of 0 , or a effective fragment length of 0,then it is also filtered.
+
+```{r define filter, message=FALSE}
+rm_perc=0.25
+```
+
 #### Call FIREs and SuperFIREs
 
 Using FIREcaller function, we call both FIREs and SuperFIREs for 22 autosomes of Hippocampus dataset.
   
 ```{r call FIRE and SuperFIRE for 22 autosomes of Hippocampus dataset}
-FIREcaller(prefix.list, gb, map_file, rm_mhc)
+FIREcaller(prefix.list, gb, map_file, rm_mhc, rm_EBL, upper_cis, dist,rm_perc)
 ```
 
-In this case, two sets of files will be returned: one for FIREs and the other one for SuperFIREs.
+In this case, two sets of files will be returned: one for FIREs and the other one for SuperFIREs. If multiple (*n*) prefix's are specified in the *prefix.list*, there will be one file for FIREs and *n* SuperFIRE files.
 
 ```{r An example for Fire and SuperFire outputs}
 # An example for FIRE output
-FIRE_output = read.table("FIRE_ANALYSIS_40KB.txt", header = T)
+FIRE_output = read.table("FIRE_ANALYSIS_40000_200000_poisson.txt", header = T)
 head(FIRE_output)
 
 # An example for SuperFIRE output
@@ -166,4 +193,4 @@ head(SuperFIRE_output)
 ```
 
 ## Citation
-Crowley, C., Yang, Y., Qiu, Y., Hu, B., Won, H., Ren, B., Hu, M., Li, Y. FIREcaller: Detecting Frequently Interacting Regions from Hi-C Data. *bioRxiv*, doi: https://doi.org/10.1101/619288.
+Crowley, C., Yang, Y., Qiu, Y., Hu, B., Lipiński, J., Plewczynski, D., Won, H., Ren, B., Hu, M., Li, Y. FIREcaller: Detecting Frequently Interacting Regions from Hi-C Data. *bioRxiv*, doi: https://doi.org/10.1101/619288.

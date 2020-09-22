@@ -10,11 +10,8 @@ output:
 
 # FIREcaller Tutorial
 
-In this tutorial, we will analyze a Hi-C data set from Hippocampus dataset originally presented in *Schmitt et al.* [(Cell,2016)](https://www.cell.com/cell-reports/pdfExtended/S2211-1247(16)31481-4). It contains 22 Hi-C NxN contact matrices of the  autosomal chromosomes. Hi-C input files and the mappability file can be downloaded from [Yun Li's Group website](https://yunliweb.its.unc.edu/FIREcaller/). 
+In this tutorial, we will analyze a Hi-C data set from Hippocampus dataset originally presented in Schmitt *et al.* [(Cell,2016)](https://www.cell.com/cell-reports/pdfExtended/S2211-1247(16)31481-4). It contains 22 Hi-C NxN contact matrices of the  autosomal chromosomes. Hi-C input files and the mappability file can be downloaded from [Yun Li's Group website](https://yunliweb.its.unc.edu/FIREcaller/download.php). 
 
-
-In this tutorial, we will analyze Hippocampus dataset from Schmitt *et al*., (Cell Reports, 2016), which contains Hi-C contact matrix of 22 autosomes from human Hippocampus. Hi-C input files and the mappability file can be downloaded from [Yun Li Group website](https://yunliweb.its.unc.edu/FIREcaller/download.php).
-  
 
 ## Setup the library
 
@@ -139,7 +136,7 @@ rm_perc=0.25
 Using FIREcaller function, we call both FIREs and SuperFIREs for 22 autosomes of Hippocampus dataset.
   
 ```{r call FIRE and SuperFIRE for 22 autosomes of Hippocampus dataset, message=FALSE}
-FIREcaller(prefix.list, gb, map_file, rm_mhc,rm_EBL, upper_cis, dist,rm_perc)
+FIREcaller(prefix.list, gb, map_file, rm_mhc, rm_EBL, upper_cis, dist,rm_perc)
 ```
 
 In this case, two sets of files will be returned: one for FIREs and the other one for SuperFIREs. If multiple (*n*) prefix's are specified in the *prefix.list*, there will be one file for FIREs and *n* SuperFIRE files.

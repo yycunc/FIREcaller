@@ -346,9 +346,9 @@ Fire_Call <- function(file, prefix.list){
   annf <- as.data.frame(annf) #indicators for pvalues > -log(0.05)
   fires <- x
 
-  colnames(annp) <- c('chr', 'start', 'end', paste0(prefix.list, '_ln_pval'))
+  colnames(annp) <- c('chr', 'start', 'end', paste0(prefix.list, '_neg_ln_pval'))
   colnames(annf) <- c('chr', 'start', 'end', paste0(prefix.list, '_indicator'))
-  colnames(fires) <- c('chr', 'start', 'end', paste0(prefix.list, '_FIRES'))
+  colnames(fires) <- c('chr', 'start', 'end', paste0(prefix.list, '_norm_cis'))
 
   final0 <- merge(fires, annp, by = c('chr', 'start', 'end'), all=TRUE, sort = FALSE)
   final <- merge(final0, annf, by = c('chr', 'start', 'end'), all = TRUE, sort = FALSE)

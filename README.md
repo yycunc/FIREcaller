@@ -12,30 +12,6 @@ Sep 20, 2020
   + Added filtering of the ENCODE blacklist regions
   + Can do single chromosomes, or full list based on the mappability file.
 
-June 30, 2020
-* Version 1.2.0 released
-  + Allows the option to include chrX
-  + Allows symmetric and upper triangular matrices as input
-  
-Feb 17, 2020
-* Python version released by Jakub Lipiński
-  + https://github.com/jakublipinski/python-FIREcaller
-
-Oct 21, 2019
-* Version 1.10 released
-  + Loosened the criterion for a "bad bin". Previously, a bin is considered to be bad if ANY of its neighboring bins within 200kb is bad. Now loosened to allow <=25% bad neighboring bins.
-  + Fixed an error that caused a lack of convergence.
-
-Sep 4, 2019
-* Version 1.00 released
-  + The Default value of "rm_mhc" is set to "TRUE" instead of "NULL".
-  + Fixing an error in SuperFIRE calling.
-
-April 08, 2019
-* Version 0.99.0 released
-  + First offical release.
-  + It can work on Window, Mac and Linux platforms.
-
 ## Installation
 Users can install FIREcaller from github with:
 ```{r install}
@@ -47,7 +23,7 @@ devtools::install_github("yycunc/FIREcaller")
 Or downloaded the package from https://yunliweb.its.unc.edu/FIREcaller/
 
 ```{r}
-install.packages("~/FIREcaller_1.30.tar.gz",repos=NULL, type="source")
+install.packages("~/FIREcaller_1.40.tar.gz",repos=NULL, type="source")
 
 ```
 
@@ -56,8 +32,7 @@ https://github.com/jakublipinski/python-FIREcaller.
 
 ## FIREcaller Examples
 
-In this tutorial, we will analyze Hippocampus dataset from Schmitt *et al*., ([Cell Reports, 2016](https://www.cell.com/cell-reports/pdfExtended/S2211-1247(16)31481-4)). It contains 22 Hi-C NxN contact matrix of the autosomal chromosomes. Hi-C input files and the mappability file can be downloaded from [Yun Li Group website](https://yunliweb.its.unc.edu/FIREcaller/download.php).
-  
+In this tutorial, we will analyze Hippocampus dataset from Schmitt *et al*., ([Cell Reports, 2016](https://www.cell.com/cell-reports/pdfExtended/S2211-1247(16)31481-4)), which contains Hi-C contact matrix of 22 autosomes from Human Hippocampus. Hi-C input files and the mappability file can be downloaded from [Yun Li Group website](https://yunliweb.its.unc.edu/FIREcaller/download.php).
 
 ### Setup the library
 ```{r init}
@@ -75,10 +50,10 @@ setwd('~/Desktop/FIREcaller_example')
 
 #### Hi-C input file
 
-The Hi-C input file *prefix.list* is defined according to the naming convention of the NxN matrices. The HiC Input files need to be sample and chromosome-specific NxN contact frequency matrix with no row name and no column name.The files for the contact matrices must have the naming convention "\${prefix}_chr\${number}.gz".
+As default, The Hi-C input file *file.list* is defined according to the naming convention of the NxN matrices. The HiC Input files need to be sample and chromosome-specific NxN contact frequency matrix with no row name and no column name.The files for the contact matrices must have the naming convention "\${prefix}\_chr\${number}.gz". For .hic and .cool files, it should be \${sample}.cool or \${sample}.hic. For .hic files, juicer is required and needs to be downloaded first.
 
 ```{r define the prefix.list according to the naming convention of the NxN matrices, warning=FALSE}
-prefix.list <- c('Hippo')
+file.list <- paste0('Hippo_chr', 1:22, '.gz')
 ```
 
 Here is an example for the required format of Hi-C input files.
@@ -100,7 +75,7 @@ gb<-'hg19'
 
 #### Define the name of the mappability file
 
-There are some mappability files of different genome build (hg19, GRCh38, mm9 and mm10) and different resolutions (10 kb and 40 kb) available in [Yun Li's's website](https://yunliweb.its.unc.edu/FIREcaller/download.php).
+Some mappability files of different genome build (hg19, GRCh38, mm9 and mm10) and different resolutions (10 kb and 40 kb) are available in [Yun Li's's website](https://yunliweb.its.unc.edu/FIREcaller/download.php).
 
 The mappability file needs to be in the format of column names as =c('chr','start', 'end', 'F', 'GC','M'), and the chromosome column needs to be in the format 'chr${number}'. The chromosomes in the file need to directly relate to the chromosomes in the process. For example, the mappability file will only contain information on chromosomes 1 through 22 to do an analysis on chromosome 1 through 22.
 
@@ -123,6 +98,27 @@ unique(Hind3_hg19_40Kb_encodeBL_F_GC_M_auto$chr)
 ```
 
 Users can also use their own mappability file in the same format.
+
+#### Define the bin size
+Default is 40000 (40 kb). Other recommended bin size are 10000 (10 kb) and 20000 (20 kb).
+
+```{r define the bin size,warning=FALSE}
+binsize <- 40000
+```
+
+#### Change the cis-interacting regions
+Users have the option to change the cis-interacting region threshold. Default is 200 kb.
+
+```{r change the cis-interacting regions,warning=FALSE}
+upper_cis <- 200000
+```
+
+#### Define if the input matrices are ALREADY normalized
+Default is FALSE. If true, it will skip within-normalization step.
+
+```{r define if the input matrices are ALREADY normalized,warning=FALSE}
+normalized <- FALSE
+```
 
 #### Define whether to remove MHC region
 
@@ -151,46 +147,60 @@ rm_EBL <- TRUE
 
 The default setting is "TRUE" to remove the ENCODE blacklist regions.
 
-#### Change the cis-interacting regions
-The user has the option to change the cis-interacting region threshold. Default is 200Kb.
+#### Change the filtering threshold 
+Users are able to change the filtering threshold, where if a cis-interaction is calculated by more than 25% bins that contains a mappability of 0, a GC content of 0 , or a effective fragment length of 0,then it is also filtered.
 
-```{r define cisinteracting region, message=FALSE}
-upper_cis=200000
+```{r define filter, message=FALSE}
+rm_perc <- 0.25
 ```
 
 #### Change the regression distribution
-The user has the option to change the regression distribution used. The HiCNormCis method uses Poisson ("poisson") distribution, but the user can change to negative binomial ("nb")
+Users have the option to change the regression distribution used. The HiCNormCis method uses Poisson ("poisson") distribution, but the user can change to negative binomial ("nb")
 
 ```{r change the regression distribution, message=FALSE}
-dist='poisson'
+dist <- 'poisson'
 ```
 
-#### Change the filtering threshold 
-The user has the option to change the filtering threshold, where if a cis-interaction is calculated by more than 25% bins that contains a mappability of 0, a GC content of 0 , or a effective fragment length of 0,then it is also filtered.
+#### Change the alpha cutoff for the significant p-value
+Default is 0.05.
 
-```{r define filter, message=FALSE}
-rm_perc=0.25
+```{r change the alpha cutoff for the significant p-value, message=FALSE}
+alpha <- 0.05
 ```
 
-#### Call FIREs and SuperFIREs
+#### Specify if you would like circos plots for the FIREs and super-FIREs
+Default is FALSE. If users would like to incorporate other multi-omics data, see *FIRE_plot* function for details.
 
-Using FIREcaller function, we call both FIREs and SuperFIREs for 22 autosomes of Hippocampus dataset.
+```{r specify if you would like circos plots for the FIREs and super-FIREs, message=FALSE}
+plots <- FALSE
+```
+
+#### Specify if you would like differential FIRE analysis
+Default is FALSE. If users would like to perform differential FIRE analysis, see *diff_interactions* function fro details. Differential FIRE analysis can be performed between two samples when each has at least two replicates. Naming convention between replicates needs to be similar. Sample name is ordered alphabetically.
+
+```{r specify if you would like differential FIRE analysis, message=FALSE}
+diff_fires <- FALSE
+```
+
+#### Call FIREs and super-FIREs
+
+Using FIREcaller function, we call both FIREs and super-FIREs for 22 autosomes of Hippocampus dataset.
   
-```{r call FIRE and SuperFIRE for 22 autosomes of Hippocampus dataset}
-FIREcaller(prefix.list, gb, map_file, rm_mhc, rm_EBL, upper_cis, dist,rm_perc)
+```{r call FIRE and super-FIRE for 22 autosomes of Hippocampus dataset}
+FIREcaller(file.list, gb, map_file, binsize = 40000, upper_cis = 200000, normalized = FALSE, rm_mhc = TRUE, rm_EBL = TRUE, rm_perc = 0.25, dist = 'poisson', alpha = 0.05, plots = FALSE, diff_fires = FALSE)
 ```
 
-In this case, two sets of files will be returned: one for FIREs and the other one for SuperFIREs. If multiple (*n*) prefix's are specified in the *prefix.list*, there will be one file for FIREs and *n* SuperFIRE files.
+In this case, two sets of files will be returned: one for FIREs and the other one for super-FIREs. If multiple (*n*) prefix's are specified in the *file.list*, there will be one file for FIREs and *n* superFIRE files.
 
 ```{r An example for Fire and SuperFire outputs}
 # An example for FIRE output
 FIRE_output = read.table("FIRE_ANALYSIS_40000_200000_poisson.txt", header = T)
 head(FIRE_output)
 
-# An example for SuperFIRE output
+# An example for super-FIRE output
 SuperFIRE_output = read.table("super_FIRE_call_Hippo.txt", header = T)
 head(SuperFIRE_output)
 ```
 
 ## Citation
-Crowley, C., Yang, Y., Qiu, Y., Hu, B., Lipiński, J., Plewczynski, D., Won, H., Ren, B., Hu, M., Li, Y. FIREcaller: Detecting Frequently Interacting Regions from Hi-C Data. *bioRxiv*, doi: https://doi.org/10.1101/619288.
+Crowley, C., Yang, Y.\*, Qiu, Y., Hu, B., Abnousi, A., Lipiński, J., Plewczynski, D., Wu, D., Won, H., Ren, B., Hu, M.\*, Li, Y\*. (2021) FIREcaller: Detecting Frequently Interacting Regions from Hi-C Data. *Computational and Structural Biotechnology Journal*, 19: 355–362.

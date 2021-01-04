@@ -1,10 +1,18 @@
 FIREcaller News
 
+FIREcaller 1.40 (Release date: 2020-12-17) 
+
+  * Allows users to define bin size
+  * Allows users to define whehter the input matrices are ALREADY normalized
+  * Allows users to change the alpha cutoff for p-value
+  * Allows users to do circos plots for the FIREs and super-FIREs
+  * Allows users to perform differential FIRE analysis
+
 FIREcaller 1.30 (Release date: 2020-09-20) 
 
-  * Allows user to change the cis-interacting region (200Kb by default)
-  * Allows user to pick the regression distribution (Poisson or Negative Binomial; Poisson by default)
-  * Allows the user to select the percentage of problematic bins filtered (25% by default)
+  * Allows users to change the cis-interacting region (200Kb by default)
+  * Allows users to pick the regression distribution (Poisson or Negative Binomial; Poisson by default)
+  * Allows users to select the percentage of problematic bins filtered (25% by default)
   * Added filtering of the ENCODE blacklist regions
   * Can do single chromosomes, or full list based on the mappability file.
 

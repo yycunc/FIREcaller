@@ -4,6 +4,15 @@ FIREcaller: an R package for detecting frequently interacting regions from Hi-C 
 FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu], Yuchen Yang [yyuchen@email.unc.edu] and Yun Li [yun_li@med.unc.edu].
 
 ## News and Updates
+
+Dec 17, 2020
+* Version 1.40 released
+  + Allows users to define bin size
+  + Allows users to define whehter the input matrices are ALREADY normalized
+  + Allows users to change the alpha cutoff for p-value
+  + Allows users to do circos plots for the FIREs and super-FIREs
+  + Allows users to perform differential FIRE analysis
+
 Sep 20, 2020
 * Version 1.30 released
   + Allows user to change the cis-interacting region (200Kb by default)

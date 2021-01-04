@@ -187,7 +187,8 @@ diff_fires <- FALSE
 Using FIREcaller function, we call both FIREs and super-FIREs for 22 autosomes of Hippocampus dataset.
   
 ```{r call FIRE and super-FIRE for 22 autosomes of Hippocampus dataset}
-FIREcaller(file.list, gb, map_file, binsize = 40000, upper_cis = 200000, normalized = FALSE, rm_mhc = TRUE, rm_EBL = TRUE, rm_perc = 0.25, dist = 'poisson', alpha = 0.05, plots = FALSE, diff_fires = FALSE)
+FIREcaller(file.list, gb, map_file, binsize = 40000, upper_cis = 200000, normalized = FALSE, rm_mhc = TRUE, 
+           rm_EBL = TRUE, rm_perc = 0.25, dist = 'poisson', alpha = 0.05, plots = FALSE, diff_fires = FALSE)
 ```
 
 In this case, two sets of files will be returned: one for FIREs and the other one for super-FIREs. If multiple (*n*) prefix's are specified in the *file.list*, there will be one file for FIREs and *n* superFIRE files.

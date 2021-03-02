@@ -290,7 +290,7 @@ cis_all_cool_sample<-function(gb,binsize,bin_num,file.list,ref_file,prefix.list)
   for(i in 1:length(file.list)){
     sample<-prefix.list[i]
     dat<-cooler2bedpe(path = paste0(file.list[i]))
-    t<-cis_inter_sample(dat,gb,bin_num,ref_file,sample)
+    t<-cis_inter_sample(dat,gb,bin_num,ref_file,sample,binsize)
   }
   t2<-cbind(t2,t)
   colnames(t2)<-c("chr","start","end","F","GC","M","EBL",prefix.list)

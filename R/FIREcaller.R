@@ -92,7 +92,6 @@
 #' 
 #' @export
 
-
 FIREcaller <- function(file.list,gb, map_file,binsize=40000, upper_cis=200000,normalized=FALSE, rm_mhc = TRUE,rm_EBL=TRUE, rm_perc=0.25, dist='poisson',alpha=0.05, plots=FALSE,diff_fires=FALSE){
 
   #reference files
@@ -286,7 +285,7 @@ cis_hic_sample<-function(file,binsize, gb,ref_file,bin_num){
 # Functions for FIRE caller with .cool samples to prepare for calculate cis_function()
 #####################################################################################
 
-cis_all_cool_sample<-function(gb,bin_num,file.list,ref_file,prefix.list){
+cis_all_cool_sample<-function(gb,binsize,bin_num,file.list,ref_file,prefix.list){
   t2<-ref_file
   for(i in 1:length(file.list)){
     sample<-prefix.list[i]

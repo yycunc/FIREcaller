@@ -12,8 +12,8 @@ setup_parser <- function() {
 
 parse_arguments <- function(parser) {
   args <- parser$parse_args()
-  message(paste('reading input from directory:', args$input))
-  message(paste('output will be written to:', args$output))
+  message(paste('reading input from:', args$input))
+  message(paste('output will be written as:', paste0(args$output,".txt")))
   message(paste('blacklist region file specified:', args$blacklist))
   return (args)
 }
@@ -55,6 +55,6 @@ for (chr_num in unique(map$chr)) {
   dat=rbind(dat, y)
 }
 
-write.table(dat, args$output, row.names=F, quote=F, sep="\t")
+write.table(dat, paste0(args$output,".txt"), row.names=F, quote=F, sep="\t")
 
 

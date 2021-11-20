@@ -148,7 +148,7 @@ rm_mhc <- TRUE
 
 #### Define whether to remove the ENCODE black list regions
 
-The ENCODE blacklist regions are described [here](https://www.nature.com/articles/s41598-019-45839-z). The EBL variable in the mappability file is an indicator of whether it is a black list region (1) or not (0).
+The ENCODE blacklist regions are described [here](https://www.nature.com/articles/s41598-019-45839-z). The EBL variable in the mappability file is an indicator of whether it is a black list region (1) or not (0). The ENCODE blacklist regions can be downloaded here https://sites.google.com/site/anshulkundaje/projects/blacklists. 
 
 ```{r define whether to remove ENCODE black list regions, message=FALSE}
 rm_EBL <- TRUE

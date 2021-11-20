@@ -114,6 +114,8 @@ If you have a six-column mappability file without the EBL column, you can use th
 
 where yourFile is your six-column mappability file with columns in the order of chr, start, end, F, GC, M, EBL and blacklistFile is the blacklist region file with three columns in the order of chr, start, and end. These two options should be the full file names with extensions (e.g., .txt or .txt.gz). The option outputFile is the prefix of your output file and outputs will be written to a txt file (e.g., MboI_20Kb_el.mm10.txt).
 
+If there is no blacklist region data available, you can also manually add an EBL column with all zeros so that no regions will be filtered out.
+
 #### Define the bin size
 Default is 40000 (40 kb). Other recommended bin size are 10000 (10 kb) and 20000 (20 kb).
 

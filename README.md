@@ -86,7 +86,7 @@ gb<-'hg19'
 
 Some mappability files of different genome build (hg19, GRCh38, mm9 and mm10) and different resolutions (10 kb and 40 kb) are available in [Yun Li's's website](https://yunliweb.its.unc.edu/FIREcaller/download.php).
 
-The mappability file needs to be in the format of column names as =c('chr','start', 'end', 'F', 'GC','M'), and the chromosome column needs to be in the format 'chr${number}'. The chromosomes in the file need to directly relate to the chromosomes in the process. For example, the mappability file will only contain information on chromosomes 1 through 22 to do an analysis on chromosome 1 through 22.
+The mappability file needs to be in the format of column names as =c('chr','start', 'end', 'F', 'GC','M','EBL'), and the chromosome column needs to be in the format 'chr${number}'. The chromosomes in the file need to directly relate to the chromosomes in the process. For example, the mappability file will only contain information on chromosomes 1 through 22 to do an analysis on chromosome 1 through 22.
 
 ```{r define the name of the mappability file, message=FALSE}
 map_file<-'Hind3_hg19_40Kb_encodeBL_F_GC_M_auto.txt.gz'
@@ -107,6 +107,12 @@ unique(Hind3_hg19_40Kb_encodeBL_F_GC_M_auto$chr)
 ```
 
 Users can also use their own mappability file in the same format.
+
+If you have a six-column mappability file without the EBL column, you can use the script `mappability.R` with blacklist region data to generate a mappability file in the required format (i.e., with the EBL column). It has three options and can be ran from the command line as follows: 
+
+`Rscript mappability.R -i yourFile -b blacklistFile -o outputFile`
+
+where yourFile is your six-column mappability file with columns in the order of chr, start, end, F, GC, M, EBL and blacklistFile is the blacklist region file with three columns in the order of chr, start, and end. The option outputFile is the prefix of your output file and outputs will be written as a txt file (e.g., MboI_20Kb_el.mm10.txt).
 
 #### Define the bin size
 Default is 40000 (40 kb). Other recommended bin size are 10000 (10 kb) and 20000 (20 kb).

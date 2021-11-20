@@ -110,9 +110,9 @@ Users can also use their own mappability file in the same format.
 
 If you have a six-column mappability file without the EBL column, you can use the script `mappability.R` with blacklist region data to generate a mappability file in the required format (i.e., with the EBL column). It has three options and can be ran from the command line as follows: 
 
-`Rscript mappability.R -i yourFile -b blacklistFile -o outputFile`
+`Rscript mappability.R -i yourFile -b blacklistFile -o outputPrefix`
 
-where yourFile is your six-column mappability file with columns in the order of chr, start, end, F, GC, M, EBL and blacklistFile is the blacklist region file with three columns in the order of chr, start, and end. The option outputFile is the prefix of your output file and outputs will be written as a txt file (e.g., MboI_20Kb_el.mm10.txt).
+where yourFile is your six-column mappability file with columns in the order of chr, start, end, F, GC, M, EBL and blacklistFile is the blacklist region file with three columns in the order of chr, start, and end. These two options should be the full file names with extensions (e.g., .txt or .txt.gz). The option outputFile is the prefix of your output file and outputs will be written to a txt file (e.g., MboI_20Kb_el.mm10.txt).
 
 #### Define the bin size
 Default is 40000 (40 kb). Other recommended bin size are 10000 (10 kb) and 20000 (20 kb).

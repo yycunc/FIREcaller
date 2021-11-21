@@ -4,6 +4,9 @@ FIREcaller: an R package for detecting frequently interacting regions from Hi-C 
 FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu], Yuchen Yang [yyuchen@email.unc.edu] and Yun Li [yun_li@med.unc.edu].
 
 ## News and Updates
+Nov 21, 2021
+* Version 1.40
+  + Provide a R script for users to add the ENCODE blacklist region into mappability file
 
 Dec 17, 2020
 * Version 1.40 released
@@ -86,7 +89,7 @@ gb<-'hg19'
 
 Some mappability files of different genome build (hg19, GRCh38, mm9 and mm10) and different resolutions (10 kb and 40 kb) are available in [Yun Li's's website](https://yunliweb.its.unc.edu/FIREcaller/download.php).
 
-The mappability file needs to be in the format of column names as =c('chr','start', 'end', 'F', 'GC','M','EBL'), and the chromosome column needs to be in the format 'chr${number}'. The chromosomes in the file need to directly relate to the chromosomes in the process. For example, the mappability file will only contain information on chromosomes 1 through 22 to do an analysis on chromosome 1 through 22.
+The mappability file needs to be in the format of column names as =c('chr','start', 'end', 'F', 'GC','M','EBL'), where, for a certain bin, they correspond to chromosome id, start and end positions, whether filter this bin, GC content and the mappability, whether this bin is overlapped with ENCODE blacklist region or not. The chromosome column needs to be in the format 'chr${number}'. The chromosomes in the file need to directly relate to the chromosomes in the process. For example, the mappability file will only contain information on chromosomes 1 through 22 to do an analysis on chromosome 1 through 22.
 
 ```{r define the name of the mappability file, message=FALSE}
 map_file<-'Hind3_hg19_40Kb_encodeBL_F_GC_M_auto.txt.gz'
@@ -112,7 +115,7 @@ If you have a six-column mappability file without the EBL column, you can use th
 
 `Rscript mappability.R -i yourFile -b blacklistFile -o outputPrefix`
 
-where yourFile is your six-column mappability file with columns in the order of chr, start, end, F, GC, M, EBL and blacklistFile is the blacklist region file with three columns in the order of chr, start, and end. These two options should be the full file names with extensions (e.g., .txt or .txt.gz). The option outputFile is the prefix of your output file and outputs will be written to a txt file (e.g., MboI_20Kb_el.mm10.txt).
+where yourFile is your six-column mappability file with columns in the order of chr, start, end, F, GC and M, and blacklistFile is the blacklist region file with three columns in the order of chr, start, and end. These two options should be the full file names with extensions (e.g., .txt or .txt.gz). The option outputFile is the prefix of your output file and outputs will be written to a txt file (e.g., MboI_20Kb_el.mm10.txt). The output file is a updated mappability file with seven columns, including chr, start, end, F, GC, M and EBL, where EBL is short for "ENCODE blasklist".
 
 If there is no blacklist region data available, you can also manually add an EBL column with all zeros so that no regions will be filtered out.
 
@@ -156,7 +159,7 @@ rm_mhc <- TRUE
 
 #### Define whether to remove the ENCODE black list regions
 
-The ENCODE blacklist regions are described [here](https://www.nature.com/articles/s41598-019-45839-z). The EBL variable in the mappability file is an indicator of whether it is a black list region (1) or not (0). The ENCODE blacklist regions can be downloaded here https://sites.google.com/site/anshulkundaje/projects/blacklists. 
+The ENCODE blacklist regions are described [here](https://www.nature.com/articles/s41598-019-45839-z). The EBL variable in the mappability file is an indicator of whether it is a black list region (1) or not (0). The ENCODE blacklist regions can be downloaded here https://sites.google.com/site/anshulkundaje/projects/blacklists. If there is no blacklist region information, please specify this option to "FALSE".
 
 ```{r define whether to remove ENCODE black list regions, message=FALSE}
 rm_EBL <- TRUE

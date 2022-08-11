@@ -1,7 +1,7 @@
 # FIREcaller
 FIREcaller: an R package for detecting frequently interacting regions from Hi-C data
 
-FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu], Yuchen Yang [yyuchen@email.unc.edu] and Yun Li [yun_li@med.unc.edu].
+FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu], Yuchen Yang [yangych68@mail.sysu.edu.cn] and Yun Li [yun_li@med.unc.edu].
 
 ## News and Updates
 Nov 21, 2021
@@ -62,7 +62,7 @@ setwd('~/Desktop/FIREcaller_example')
 
 #### Hi-C input file
 
-As default, The Hi-C input file *file.list* is defined according to the naming convention of the NxN matrices. The HiC Input files need to be sample and chromosome-specific NxN contact frequency matrix with no row name and no column name.The files for the contact matrices must have the naming convention "\${prefix}\_chr\${number}.gz". For .hic and .cool files, it should be ${sample}.cool or ${sample}.hic. For .hic files, juicer is required and needs to be downloaded first.
+As default, The Hi-C input file *file.list* is defined according to the naming convention of the NxN matrices. The HiC Input files need to be sample and chromosome-specific NxN contact frequency matrix with no row name and no column name.The files for the contact matrices must have the naming convention "\${prefix}\_chr\${number}.gz". For .hic and .cool files, it should be \${sample}.cool or \${sample}.hic. For .hic files, juicer is required and needs to be downloaded first.
 
 ```{r define the prefix.list according to the naming convention of the NxN matrices, warning=FALSE}
 file.list <- paste0('Hippo_chr', 1:22, '.gz')

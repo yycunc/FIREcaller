@@ -107,21 +107,21 @@ FIREcaller <- function(file.list,gb, map_file,binsize=40000, upper_cis=200000,no
   temp<-file.list[1]
   
   if(str_count(temp,".gz")==1){
-    prefix.list<-unique(str_split_n(file.list,"_chr",1))
+    prefix.list<-unique(str_split_fixed(file.list,"_chr",2)[,1])
   }
   
   if(str_count(temp,".cool")==1){
-    prefix.list<-unique(str_split_n(file.list,".cool",1))
+    prefix.list<-unique(str_split_fixed(file.list,".cool",2)[,1])
   }
   
   if(str_count(temp,".hic")==1){
-    prefix.list<-unique(str_split_n(file.list,".hic",1))
+    prefix.list<-unique(str_split_fixed(file.list,".hic",2)[,1])
   }
 
   #(1) calculate cis-interactions 
   #(1A) .gz -- 
   if(str_count(temp,".gz")==1){
-    chr_list<-paste0("chr",unique(str_split_n(str_split_n(file.list,"_chr",2),"[.]",1)))
+    chr_list<-paste0("chr",unique(str_split_fixed(str_split_fixed(file.list,"_chr",2)[,2],"[.]",2)[,1]))
     t <- cis_15KB_200KB(prefix.list,chr_list, bin_num, ref_file)
   }
   

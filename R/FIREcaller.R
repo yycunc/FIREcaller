@@ -233,7 +233,7 @@ cis_hic_sample<-function(file,binsize, gb,ref_file,bin_num){
   if(gb %in% c('mm9','mm10')){
     chroms <- paste0("chr", c(1:19, "X"))
   }
-  if(gb %in% c('hg19','gb38')){
+  if(gb %in% c('hg19','GRCh38')){
     chroms <- paste0("chr", c(1:22, "X"))
   }
   

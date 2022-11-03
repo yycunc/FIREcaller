@@ -105,7 +105,7 @@ plots<-FALSE
 diff_fires<-FALSE
 
 # run the function
-FIREcaller(file.list, gb, map_file,nchrom, chroms_file=NULL, binsize=40000, upper_cis=200000,normalized=FALSE, rm_mhc = TRUE,rm_EBL=TRUE, rm_perc=0.25, dist='poisson',alpha=0.05, plots=FALSE,diff_fires=FALSE)
+FIREcaller(file.list, gb, map_file, nchrom, chroms_file=NULL, binsize=40000, upper_cis=200000,normalized=FALSE, rm_mhc = TRUE,rm_EBL=TRUE, rm_perc=0.25, dist='poisson',alpha=0.05, plots=FALSE,diff_fires=FALSE)
 
 }
 \references{

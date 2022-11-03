@@ -13,7 +13,7 @@ FIREcaller(file.list=(...), gb=c("hg19","GRCh38","mm9","mm10",""), map_file="", 
 
 \item{map_file}{a string that defines the name of the mappability file specific to the samples genome build, restriction enzyme, and resolution. Only contains chromosomes you want to input. See read me for format.}
 
-\item{nchrom}{a numeric value for the number of chromosome. If gb is in c("hg19","GRCh38","mm9","mm10"), nchrom can be omitted, otherwise it must be provided.}
+\item{nchrom}{a numeric value for the number of chromosomes. If gb is in c("hg19","GRCh38","mm9","mm10"), nchrom can be omitted, otherwise it must be provided.}
                                                                                                                 
 \item{chroms_file}{a string that defines the name of the file including the size of each chromosome of the genome build type. If gb is in c("hg19","GRCh38","mm9","mm10"), chroms_file can be omitted, otherwise it must be provided. See read me for format.}
                                                                                                                 

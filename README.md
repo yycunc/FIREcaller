@@ -4,6 +4,10 @@ FIREcaller: an R package for detecting frequently interacting regions from Hi-C 
 FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu], Yuchen Yang [yangych68@mail.sysu.edu.cn] and Yun Li [yun_li@med.unc.edu].
 
 ## News and Updates
+Nov 3, 2022
+* Version 1.42
+  + Allows users to perform FIREcaller on data of genome build other than hg19, GRCh38, mm9 and mm10, with a file of chromosome size being provided.
+
 Nov 21, 2021
 * Version 1.40
   + Provide a R script for users to add the ENCODE blacklist region into mappability file
@@ -79,7 +83,7 @@ Hippo_chr1[100:110,100:110]
 
 #### Define the genome build
 
-Users are required to define the genome build type. It can be "hg19" or "GRCh38" for human data, and "mm9" or "mm10" for mouse data. If missing, an error message is returned.
+Users are required to define the genome build type. It can be "hg19" or "GRCh38" for human data, "mm9" or "mm10" for mouse data. Other genome build type is also allowed, if so, the chromosome size of the tested species must be provided. If missing, an error message is returned.
 
 ```{r define the genome build, message=FALSE}
 gb<-'hg19'
@@ -119,6 +123,14 @@ where yourFile is your six-column mappability file with columns in the order of 
 
 If there is no blacklist region data available, you can also manually add an EBL column with all zeros so that no regions will be filtered out.
 
+#### Define the chromosomes number and the name of chromosome size file
+If gb is one of hg19, GRCh38, mm9 and mm10, chromosome size file and the number of chromosome can be omitted. Otherwise user needs to provide a chromosome size file. The file needs to be composed of two columns, the first column is the name of the chromosome, and the second is the corresponding size. The chromosomes in the file need to directly relate to the chromosomes in the process. When chromosome size file is provided, the number of chromosomes can be omitted. In this example, both parameters can be omitted.
+
+```{r define the number of chromosomes and the name of chromosome size file}
+nchrom <- 0
+chroms_file <- NULL
+```
+
 #### Define the bin size
 Default is 40000 (40 kb). Other recommended bin size are 10000 (10 kb) and 20000 (20 kb).
 
@@ -151,7 +163,7 @@ The MHC regions defined in the R package are:<br/>
 |mm9   |chr17 |33888191-35744546 & 36230820-38050373 |
 |mm10  |chr17 | 33681276 & 38548659                  |
 
-The default setting is "TRUE"", that is, to remove the MHC region.
+The default setting is "TRUE"", that is, to remove the MHC region if gb is in c("hg19","GRCh38","mm9","mm10"), "FALSE" if not.
 
 ```{r define whether to remove MHC region, message=FALSE}
 rm_mhc <- TRUE
@@ -165,7 +177,7 @@ The ENCODE blacklist regions are described [here](https://www.nature.com/article
 rm_EBL <- TRUE
 ```
 
-The default setting is "TRUE" to remove the ENCODE blacklist regions.
+The default setting is "TRUE" to remove the ENCODE blacklist regions if gb is in c("hg19","GRCh38","mm9","mm10"), "FALSE" if not.
 
 #### Change the filtering threshold 
 Users are able to change the filtering threshold, where if a cis-interaction is calculated by more than 25% bins that contains a mappability of 0, a GC content of 0 , or a effective fragment length of 0,then it is also filtered.
@@ -207,7 +219,7 @@ diff_fires <- FALSE
 Using FIREcaller function, we call both FIREs and super-FIREs for 22 autosomes of Hippocampus dataset.
   
 ```{r call FIRE and super-FIRE for 22 autosomes of Hippocampus dataset}
-FIREcaller(file.list, gb, map_file, binsize = 40000, upper_cis = 200000, normalized = FALSE, rm_mhc = TRUE, 
+FIREcaller(file.list, gb, map_file, nchrom=0, chroms_file=NULL, binsize = 40000, upper_cis = 200000, normalized = FALSE, rm_mhc = TRUE, 
            rm_EBL = TRUE, rm_perc = 0.25, dist = 'poisson', alpha = 0.05, plots = FALSE, diff_fires = FALSE)
 ```
 

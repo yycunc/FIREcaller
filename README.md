@@ -127,7 +127,7 @@ If there is no blacklist region data available, you can also manually add an EBL
 If gb is one of hg19, GRCh38, mm9 and mm10, chromosome size file and the number of chromosome can be omitted. Otherwise user needs to provide a chromosome size file. The file needs to be composed of two columns, the first column is the name of the chromosome, and the second is the corresponding size. The chromosomes in the file need to directly relate to the chromosomes in the process. When chromosome size file is provided, the number of chromosomes can be omitted. In this example, both parameters can be omitted.
 
 ```{r define the number of chromosomes and the name of chromosome size file}
-nchrom <- 0
+nchrom <- 23
 chroms_file <- NULL
 ```
 
@@ -219,7 +219,7 @@ diff_fires <- FALSE
 Using FIREcaller function, we call both FIREs and super-FIREs for 22 autosomes of Hippocampus dataset.
   
 ```{r call FIRE and super-FIRE for 22 autosomes of Hippocampus dataset}
-FIREcaller(file.list, gb, map_file, nchrom=0, chroms_file=NULL, binsize = 40000, upper_cis = 200000, normalized = FALSE, rm_mhc = TRUE, 
+FIREcaller(file.list, gb, map_file, nchrom, chroms_file=NULL, binsize = 40000, upper_cis = 200000, normalized = FALSE, rm_mhc = TRUE, 
            rm_EBL = TRUE, rm_perc = 0.25, dist = 'poisson', alpha = 0.05, plots = FALSE, diff_fires = FALSE)
 ```
 

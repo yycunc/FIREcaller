@@ -1,22 +1,24 @@
 # !/usr/bin/env Rscript
-# March 10,2021
-# Version 1.4.1
+# November 3,2023
+# Version 1.4.2
 #
 #' @title FIREcaller: an R package for detecting frequently interacting regions from Hi-C data
 #' @description This function FIREcaller() in the FIREcaller package ( user-friendly R package for detecting FIREs from Hi-C data), 
 #' For default parameters: FIREcaller takes raw Hi-C NxN contact matrix as input, performs within-sample and cross-sample normalization via
 #' HiCNormCis and quantile normalization respectively, and outputs FIRE scores, FIREs and super-FIREs.
 #' Input is either an NxN contact matrices in the form of a .gz file, or data in .cool and .hic format.
-#' @usage FIREcaller(file.list=(...), gb=c("hg19","GRCh38","mm9","mm10"), map_file="", binsize=c(10000,20000,40000),upper_cis=200000, normalized=c("TRUE","FALSE"),filter=c("TRUE","FALSE"),rm_mhc=c("TRUE","FALSE"),rm_EBL=c("TRUE","FALSE"), rm_perc=0.25, dist=c('poisson','nb'),alpha=0.05,diff_fires=c('TRUE','FALSE')) 
+#' @usage FIREcaller(file.list=(...), gb=c("hg19","GRCh38","mm9","mm10",""), map_file="", nchrom=0, chroms_file="", binsize=c(10000,20000,40000),upper_cis=200000, normalized=c("TRUE","FALSE"),filter=c("TRUE","FALSE"),rm_mhc=c("TRUE","FALSE"),rm_EBL=c("TRUE","FALSE"), rm_perc=0.25, dist=c('poisson','nb'),alpha=0.05,diff_fires=c('TRUE','FALSE')) 
 #' @param file.list a list of files used for FIREcaller. If in .gz format, the naming convention is ${prefix}.chr${chr#}.gz. If in .cool format, the naming convention is ${prefix}.cool.
 #' @param gb a string that defines the genome build type. If missing, an error message is returned.
 #' @param map_file a string that defines the name of the mappability file specific to the samples genome build, restriction enzyme, and resolution. Only contains chromosomes you want to input. See read me for format.
+#' @param nchrom a numeric value for the number of chromosome. If gb is in c("hg19","GRCh38","mm9","mm10"), nchrom can be omitted, otherwise it must be provided.
+#' @param chroms_file a string that defines the name of the file including the size of each chromosome of the genome build type. If gb is in in c("hg19","GRCh38","mm9","mm10"), it can be omitted, otherwise it must be provided.
 #' @param binsize a numeric value for the binsize. Default is 40000 (40Kb) with other options being 10Kb or 20Kb.
 #' @param upper_cis a bound for the cis-interactions calculation. The default is 200000 (200Kb).
 #' @param normalized  a logical value for whether the input matrices are ALREADY normalized. If TRUE, the normalization procedures are skipped. Default=FALSE.
 #' @param rm_perc is the percentage of "bad-bins" in a cis-interaction calculation to filter. Default is 0.25 (25\% filtered)
-#' @param rm_mhc a logical value indicating whether to remove the MHC region of the sample. Default is "TRUE".
-#' @param rm_EBL a logical value indicating whether to remove the ENCODE blacklist regions of the sample. Default is "TRUE".
+#' @param rm_mhc a logical value indicating whether to remove the MHC region of the sample. Default is "TRUE" if gb is in in c("hg19","GRCh38","mm9","mm10"), "FALSE" if not.
+#' @param rm_EBL a logical value indicating whether to remove the ENCODE blacklist regions of the sample. Default is "TRUE" if gb is in in c("hg19","GRCh38","mm9","mm10"), "FALSE" if not.
 #' @param dist is the distribution specification for the HiCNormCis normalization and FIREscore calculation. The default is Poisson.
 #' @param alpha is the type 1 error for the p-value cut off. Default is 0.05.
 #' @param diff_fires a logical value for whether to include the differential FIRE analysis. Samples need to have {_rep1} or {_rep2} differences in the file name.Default=FALSE.
@@ -92,7 +94,7 @@
 #' 
 #' @export
 
-FIREcaller <- function(file.list,gb, map_file,binsize=40000, upper_cis=200000,normalized=FALSE, rm_mhc = TRUE,rm_EBL=TRUE, rm_perc=0.25, dist='poisson',alpha=0.05, plots=FALSE,diff_fires=FALSE){
+FIREcaller <- function(file.list, gb, map_file, nchrom=0, chroms_file=NULL, binsize=40000, upper_cis=200000,normalized=FALSE, rm_mhc = TRUE,rm_EBL=TRUE, rm_perc=0.25, dist='poisson',alpha=0.05, plots=FALSE,diff_fires=FALSE){
 
   #reference files
   options(scipen = 999)
@@ -103,9 +105,22 @@ FIREcaller <- function(file.list,gb, map_file,binsize=40000, upper_cis=200000,no
   bin_num <- ceiling(upper_cis/res)
   output_name<-paste0('FIRE_ANALYSIS_', res,"_",upper_cis,'_',dist,'.txt')
   
-  #check file type;
+  #check gb and chroms_file
   temp<-file.list[1]
+  if(!(gb %in% c('mm9','mm10','hg19','GRCh38'))){
+    rm_mhc = FALSE
+    rm_EBL=FALSE
+    if(str_count(temp,".gz")!=1){
+      if(is.null(chroms_file)){
+        stop('The number of chromosomes (nchrom) and file about chromsome\'s size (chroms_file) of experimental species need to be provided!')
+      }
+      chrom_size<-as.data.frame(fread(chroms_file))
+      nchrom<-nrow(chrom_size)
+      colnames(chrom_size)<-c("chr","size")
+    }
+  }
   
+  #check file type;
   if(str_count(temp,".gz")==1){
     prefix.list<-unique(str_split_fixed(file.list,"_chr",2)[,1])
   }
@@ -127,12 +142,12 @@ FIREcaller <- function(file.list,gb, map_file,binsize=40000, upper_cis=200000,no
   
   #(1B) cooler
   if(str_count(temp,".cool")==1){
-    t <- cis_all_cool_sample(gb,binsize,bin_num,file.list,ref_file,prefix.list)
+    t <- cis_all_cool_sample(gb,nchrom,chrom_size,binsize,bin_num,file.list,ref_file,prefix.list)
   }
   
   #(1C) hic
   if(str_count(temp,".hic")==1){
-    t <- cis_all_hic_sample(gb,binsize,bin_num,file.list,ref_file,prefix.list)
+    t <- cis_all_hic_sample(gb,nchrom,chrom_size,binsize,bin_num,file.list,ref_file,prefix.list)
   }
 
   #(2) filtering
@@ -216,25 +231,31 @@ cis_single_chr <- function(prefix.list, chr, bin_num,ref_file){
 #####################################################################################
 # Functions for FIRE caller with .hic samples to prepare for calc_cis()
 #####################################################################################
-cis_all_hic_sample<-function(gb,binsize,bin_num,file.list,ref_file,prefix.list){
+cis_all_hic_sample<-function(gb,nchrom,chrom_size,binsize,bin_num,file.list,ref_file,prefix.list){
   t2<-ref_file
   for(i in 1:length(file.list)){
     file<-file.list[i]
     t<-cis_hic_sample(file,binsize, gb,ref_file,bin_num)
   }
-  t2<-cbind(t2,t)
+  t2<-merge(t2, t, by = c("chr", "start", "end", "F", "GC", "M","EBL"), sort = FALSE, all = TRUE)
   colnames(t2)<-c("chr","start","end","F","GC","M","EBL",prefix.list)
   return(t2)
 }
 
-cis_hic_sample<-function(file,binsize, gb,ref_file,bin_num){
-  load(system.file("extdata","chrom_sizes.rda",package="FIREcaller"))
+cis_hic_sample<-function(file,binsize,gb,nchrom,chrom_size,ref_file,bin_num){
   
   if(gb %in% c('mm9','mm10')){
     chroms <- paste0("chr", c(1:19, "X"))
+    load(system.file("extdata","chrom_sizes.rda",package="FIREcaller"))
   }
-  if(gb %in% c('hg19','GRCh38')){
-    chroms <- paste0("chr", c(1:22, "X"))
+  else{
+    if(gb %in% c('hg19','GRCh38')){
+      chroms <- paste0("chr", c(1:22, "X"))
+      load(system.file("extdata","chrom_sizes.rda",package="FIREcaller"))
+    }
+    else{
+      chroms <- chrom_size[,1]
+    }
   }
   
   m3<-NULL
@@ -253,9 +274,13 @@ cis_hic_sample<-function(file,binsize, gb,ref_file,bin_num){
     colnames(data)<-c('start','end','N')
     long_matrix<-as.data.frame(data)
     
-    all_chr<-as.data.frame(all_chr)
-    chr_size<-all_chr[all_chr$chr==chrom,grepl(gb, colnames(all_chr))]
-    
+    if(gb %in% c('mm9','mm10','hg19','GRCh38')){
+      all_chr<-as.data.frame(all_chr)
+      chr_size<-all_chr[all_chr$chr==chrom,grepl(gb, colnames(all_chr))]
+    }
+    else{
+      chr_size<-chrom_size[chrom_size$chr==chrom,2]
+    }
     
     matrix_size<-ceiling(chr_size/binsize)
     colnames(long_matrix)<-c('row','column','N')
@@ -285,12 +310,12 @@ cis_hic_sample<-function(file,binsize, gb,ref_file,bin_num){
 # Functions for FIRE caller with .cool samples to prepare for calculate cis_function()
 #####################################################################################
 
-cis_all_cool_sample<-function(gb,binsize,bin_num,file.list,ref_file,prefix.list){
+cis_all_cool_sample<-function(gb,nchrom,chrom_size,binsize,bin_num,file.list,ref_file,prefix.list){
   t2<-ref_file
   for(i in 1:length(file.list)){
     sample<-prefix.list[i]
     dat<-cooler2bedpe(path = paste0(file.list[i]))
-    t<-cis_inter_sample(dat,gb,bin_num,ref_file,sample,binsize)
+    t<-cis_inter_sample(dat,gb,nchrom,chrom_size,bin_num,ref_file,sample,binsize)
     t2<-t2[t2$chr %in% unique(t$chr),]
     t2<-merge(t2,t,by=c("chr","start","end","F","GC","M","EBL"),all=TRUE)
   }
@@ -299,18 +324,37 @@ cis_all_cool_sample<-function(gb,binsize,bin_num,file.list,ref_file,prefix.list)
 }
 
 
-cis_inter_sample<-function(dat,gb,bin_num,ref_file,sample,binsize){
-  load(system.file("extdata","chrom_sizes.rda",package="FIREcaller"))
-  all_chr<-as.data.frame(all_chr)
-  chroms.0 <- names(dat[[1]])
-  chroms<-chroms.0[chroms.0 %in% c(paste0('chr',1:22),'chrX')]
+cis_inter_sample<-function(dat,gb,nchrom,chrom_size,bin_num,ref_file,sample,binsize){
+if(gb %in% c('mm9','mm10')){
+    chroms <- paste0("chr", c(1:19, "X"))
+    load(system.file("extdata","chrom_sizes.rda",package="FIREcaller"))
+    chroms.0 <- names(dat[[1]])
+    chroms<-chroms.0[chroms.0 %in% c(paste0('chr',1:19),'chrX')]
+  }
+  else{
+    if(gb %in% c('hg19','GRCh38')){
+      chroms <- paste0("chr", c(1:22, "X"))
+      load(system.file("extdata","chrom_sizes.rda",package="FIREcaller"))
+      chroms.0 <- names(dat[[1]])
+      chroms<-chroms.0[chroms.0 %in% c(paste0('chr',1:22),'chrX')]
+    }
+    else{
+      chroms <- chrom_size[,1]
+    }
+  }
   m3<-NULL
   
   for(chr in chroms){
     ref_file_chr <- ref_file[ref_file$chr == chr,]
     data_mat <- dat[[1]][[chr]] #separate out matrix from main file;
     
-    chr_size<-all_chr[all_chr$chr==chr,grepl(toString(gb), colnames(all_chr))]
+    if(gb %in% c('mm9','mm10','hg19','GRCh38')){
+      all_chr<-as.data.frame(all_chr)
+      chr_size<-all_chr[all_chr$chr==chrom,grepl(toString(gb), colnames(all_chr))]
+    }
+    else{
+      chr_size<-chrom_size[chrom_size$chr==chrom,2]
+    }
     matrix_size<-ceiling(chr_size/binsize)
     m1<-cooler_2_matrix(data_mat,matrix_size,binsize) #create a nxn contact matrix
     m1<-as.matrix(m1)

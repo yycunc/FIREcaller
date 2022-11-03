@@ -12,13 +12,13 @@
 #' @param gb a string that defines the genome build type. If missing, an error message is returned.
 #' @param map_file a string that defines the name of the mappability file specific to the samples genome build, restriction enzyme, and resolution. Only contains chromosomes you want to input. See read me for format.
 #' @param nchrom a numeric value for the number of chromosome. If gb is in c("hg19","GRCh38","mm9","mm10"), nchrom can be omitted, otherwise it must be provided.
-#' @param chroms_file a string that defines the name of the file including the size of each chromosome of the genome build type. If gb is in in c("hg19","GRCh38","mm9","mm10"), it can be omitted, otherwise it must be provided.
+#' @param chroms_file a string that defines the name of the file including the size of each chromosome of the genome build type. If gb is in c("hg19","GRCh38","mm9","mm10"), chroms_file can be omitted, otherwise it must be provided. See read me for format.
 #' @param binsize a numeric value for the binsize. Default is 40000 (40Kb) with other options being 10Kb or 20Kb.
 #' @param upper_cis a bound for the cis-interactions calculation. The default is 200000 (200Kb).
 #' @param normalized  a logical value for whether the input matrices are ALREADY normalized. If TRUE, the normalization procedures are skipped. Default=FALSE.
 #' @param rm_perc is the percentage of "bad-bins" in a cis-interaction calculation to filter. Default is 0.25 (25\% filtered)
-#' @param rm_mhc a logical value indicating whether to remove the MHC region of the sample. Default is "TRUE" if gb is in in c("hg19","GRCh38","mm9","mm10"), "FALSE" if not.
-#' @param rm_EBL a logical value indicating whether to remove the ENCODE blacklist regions of the sample. Default is "TRUE" if gb is in in c("hg19","GRCh38","mm9","mm10"), "FALSE" if not.
+#' @param rm_mhc a logical value indicating whether to remove the MHC region of the sample. Default is "TRUE" if gb is in c("hg19","GRCh38","mm9","mm10"), "FALSE" if not.
+#' @param rm_EBL a logical value indicating whether to remove the ENCODE blacklist regions of the sample. Default is "TRUE" if gb is in c("hg19","GRCh38","mm9","mm10"), "FALSE" if not.
 #' @param dist is the distribution specification for the HiCNormCis normalization and FIREscore calculation. The default is Poisson.
 #' @param alpha is the type 1 error for the p-value cut off. Default is 0.05.
 #' @param diff_fires a logical value for whether to include the differential FIRE analysis. Samples need to have {_rep1} or {_rep2} differences in the file name.Default=FALSE.

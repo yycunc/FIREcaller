@@ -11,7 +11,7 @@
 #' @param file.list a list of files used for FIREcaller. If in .gz format, the naming convention is ${prefix}.chr${chr#}.gz. If in .cool format, the naming convention is ${prefix}.cool.
 #' @param gb a string that defines the genome build type. If missing, an error message is returned.
 #' @param map_file a string that defines the name of the mappability file specific to the samples genome build, restriction enzyme, and resolution. Only contains chromosomes you want to input. See read me for format.
-#' @param nchrom a numeric value for the number of chromosome. If gb is in c("hg19","GRCh38","mm9","mm10"), nchrom can be omitted, otherwise it must be provided.
+#' @param nchrom a numeric value for the number of chromosomes. If gb is in c("hg19","GRCh38","mm9","mm10"), nchrom can be omitted, otherwise it must be provided.
 #' @param chroms_file a string that defines the name of the file including the size of each chromosome of the genome build type. If gb is in c("hg19","GRCh38","mm9","mm10"), chroms_file can be omitted, otherwise it must be provided. See read me for format.
 #' @param binsize a numeric value for the binsize. Default is 40000 (40Kb) with other options being 10Kb or 20Kb.
 #' @param upper_cis a bound for the cis-interactions calculation. The default is 200000 (200Kb).
@@ -59,6 +59,10 @@
 #' # define the name of the mappability file
 #' map_file<-'Hind3_hg19_40Kb_encodeBL_F_GC_M_auto.txt.gz'
 #'
+#' # define the number of chromosomes and the name of the chromosome size file
+#' nchrom<-23
+#' chroms_file<-NULL
+#'
 #' # define the binsize. Default=40000 (40Kb). Other recommended bin sizes are 10000 (10Kb) and 20000 (20Kb).
 #' binsize<-40000
 #' 
@@ -90,7 +94,7 @@
 #' diff_fires<-FALSE
 #'
 #' # run the function
-#' FIREcaller(file.list, gb, map_file,binsize=40000, upper_cis=200000,normalized=FALSE, rm_mhc = TRUE,rm_EBL=TRUE, rm_perc=0.25, dist='poisson',alpha=0.05, plots=FALSE,diff_fires=FALSE)
+#' FIREcaller(file.list, gb, map_file, nchrom, chroms_file=NULL, binsize=40000, upper_cis=200000,normalized=FALSE, rm_mhc = TRUE,rm_EBL=TRUE, rm_perc=0.25, dist='poisson',alpha=0.05, plots=FALSE,diff_fires=FALSE)
 #' 
 #' @export
 

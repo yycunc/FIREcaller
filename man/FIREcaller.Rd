@@ -4,7 +4,7 @@
 \alias{FIREcaller}
 \title{FIREcaller: an R package for detecting frequently interacting regions from Hi-C data}
 \usage{
-FIREcaller(file.list=(...), gb=c("hg19","GRCh38","mm9","mm10"), map_file="", binsize=c(10000,20000,40000),upper_cis=200000, normalized=c("TRUE","FALSE"),filter=c("TRUE","FALSE"),rm_mhc=c("TRUE","FALSE"),rm_EBL=c("TRUE","FALSE"), rm_perc=0.25, dist=c('poisson','nb'),alpha=0.05,diff_fires=c('TRUE','FALSE'))
+FIREcaller(file.list=(...), gb=c("hg19","GRCh38","mm9","mm10",""), map_file="", nchrom=0, chroms_file="", binsize=c(10000,20000,40000),upper_cis=200000, normalized=c("TRUE","FALSE"),filter=c("TRUE","FALSE"),rm_mhc=c("TRUE","FALSE"),rm_EBL=c("TRUE","FALSE"), rm_perc=0.25, dist=c('poisson','nb'),alpha=0.05,diff_fires=c('TRUE','FALSE'))
 }
 \arguments{
 \item{file.list}{a list of files used for FIREcaller. If in .gz format, the naming convention is ${prefix}.chr${chr#}.gz. If in .cool format, the naming convention is ${prefix}.cool.}
@@ -13,15 +13,19 @@ FIREcaller(file.list=(...), gb=c("hg19","GRCh38","mm9","mm10"), map_file="", bin
 
 \item{map_file}{a string that defines the name of the mappability file specific to the samples genome build, restriction enzyme, and resolution. Only contains chromosomes you want to input. See read me for format.}
 
+\item{nchrom}{a numeric value for the number of chromosome. If gb is in c("hg19","GRCh38","mm9","mm10"), nchrom can be omitted, otherwise it must be provided.}
+                                                                                                                
+\item{chroms_file}{a string that defines the name of the file including the size of each chromosome of the genome build type. If gb is in c("hg19","GRCh38","mm9","mm10"), chroms_file can be omitted, otherwise it must be provided. See read me for format.}
+                                                                                                                
 \item{binsize}{a numeric value for the binsize. Default is 40000 (40Kb) with other options being 10Kb or 20Kb.}
 
 \item{upper_cis}{a bound for the cis-interactions calculation. The default is 200000 (200Kb).}
 
 \item{normalized}{a logical value for whether the input matrices are ALREADY normalized. If TRUE, the normalization procedures are skipped. Default=FALSE.}
 
-\item{rm_mhc}{a logical value indicating whether to remove the MHC region of the sample. Default is "TRUE".}
+\item{rm_mhc}{a logical value indicating whether to remove the MHC region of the sample. Default is "TRUE" if gb is in c("hg19","GRCh38","mm9","mm10"), "FALSE" if not.}
 
-\item{rm_EBL}{a logical value indicating whether to remove the ENCODE blacklist regions of the sample. Default is "TRUE".}
+\item{rm_EBL}{a logical value indicating whether to remove the ENCODE blacklist regions of the sample. Default is "TRUE" if gb is in c("hg19","GRCh38","mm9","mm10"), "FALSE" if not.}
 
 \item{rm_perc}{is the percentage of "bad-bins" in a cis-interaction calculation to filter. Default is 0.25 (25\% filtered)}
 
@@ -63,6 +67,12 @@ gb<-'hg19'
 
 # define the name of the mappability file
 map_file<-'Hind3_hg19_40Kb_encodeBL_F_GC_M_auto.txt.gz'
+    
+# define the nchrom (can be omitted in this example since the package has included the chromosome size data for genome build 'hg19')
+nchrom<-23
+    
+# define the name of the chromosome size file (can be omitted in this example since the package has included the chromosome size data for genome build 'hg19')
+# chroms_file<-NULL
 
 # define the binsize. Default=40000 (40Kb). Other recommended bin sizes are 10000 (10Kb) and 20000 (20Kb).
 binsize<-40000
@@ -95,7 +105,7 @@ plots<-FALSE
 diff_fires<-FALSE
 
 # run the function
-FIREcaller(file.list, gb, map_file,binsize=40000, upper_cis=200000,normalized=FALSE, rm_mhc = TRUE,rm_EBL=TRUE, rm_perc=0.25, dist='poisson',alpha=0.05, plots=FALSE,diff_fires=FALSE)
+FIREcaller(file.list, gb, map_file,nchrom, chroms_file=NULL, binsize=40000, upper_cis=200000,normalized=FALSE, rm_mhc = TRUE,rm_EBL=TRUE, rm_perc=0.25, dist='poisson',alpha=0.05, plots=FALSE,diff_fires=FALSE)
 
 }
 \references{

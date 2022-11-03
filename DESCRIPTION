@@ -1,7 +1,7 @@
 Package: FIREcaller
 Type: Package
 Title: FIREcaller: an R package for detecting frequently interacting regions from Hi-C data
-Version: 1.40
+Version: 1.42
 Author: c(person("Cheynna", "Crowley", email = "cacrowle@live.unc.edu", role = c("aut", "cre")),
              person("Yuchen", "Yang", email = "yyuchen@email.unc.edu", role = c("aut")),
              person("Ming", "Hu", email = "afhuming@gmail.com", role = c("aut")),

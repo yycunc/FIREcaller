@@ -7,12 +7,13 @@
 #' For default parameters: FIREcaller takes raw Hi-C NxN contact matrix as input, performs within-sample and cross-sample normalization via
 #' HiCNormCis and quantile normalization respectively, and outputs FIRE scores, FIREs and super-FIREs.
 #' Input is either an NxN contact matrices in the form of a .gz file, or data in .cool and .hic format.
-#' @usage FIREcaller(file.list=(...), gb=c("hg19","GRCh38","mm9","mm10",""), map_file="", nchrom=0, chroms_file="", binsize=c(10000,20000,40000),upper_cis=200000, normalized=c("TRUE","FALSE"),filter=c("TRUE","FALSE"),rm_mhc=c("TRUE","FALSE"),rm_EBL=c("TRUE","FALSE"), rm_perc=0.25, dist=c('poisson','nb'),alpha=0.05,diff_fires=c('TRUE','FALSE')) 
+#' @usage FIREcaller(file.list=(...), gb=c("hg19","GRCh38","mm9","mm10",""), map_file="", nchrom=0, chroms_file="", juicer_tools_version=NULL, binsize=c(10000,20000,40000),upper_cis=200000, normalized=c("TRUE","FALSE"),filter=c("TRUE","FALSE"),rm_mhc=c("TRUE","FALSE"),rm_EBL=c("TRUE","FALSE"), rm_perc=0.25, dist=c('poisson','nb'),alpha=0.05,diff_fires=c('TRUE','FALSE')) 
 #' @param file.list a list of files used for FIREcaller. If in .gz format, the naming convention is ${prefix}.chr${chr#}.gz. If in .cool format, the naming convention is ${prefix}.cool.
 #' @param gb a string that defines the genome build type. If missing, an error message is returned.
 #' @param map_file a string that defines the name of the mappability file specific to the samples genome build, restriction enzyme, and resolution. Only contains chromosomes you want to input. See read me for format.
 #' @param nchrom a numeric value for the number of chromosomes. If gb is in c("hg19","GRCh38","mm9","mm10"), nchrom can be omitted, otherwise it must be provided.
 #' @param chroms_file a string that defines the name of the file including the size of each chromosome of the genome build type. If gb is in c("hg19","GRCh38","mm9","mm10"), chroms_file can be omitted, otherwise it must be provided. See read me for format.
+#' @param juicer_tools_version a string that defines the version of juicer_tools. If the input file is in .hic format, it must be provided. It should be the full name of juicer_tools file name. For example: "juicer_tools.2.20.00.ac.jar". 
 #' @param binsize a numeric value for the binsize. Default is 40000 (40Kb) with other options being 10Kb or 20Kb.
 #' @param upper_cis a bound for the cis-interactions calculation. The default is 200000 (200Kb).
 #' @param normalized  a logical value for whether the input matrices are ALREADY normalized. If TRUE, the normalization procedures are skipped. Default=FALSE.
@@ -63,6 +64,9 @@
 #' nchrom<-23
 #' chroms_file<-NULL
 #'
+#' # define the version of juicer_tools if the input file is in .hic format, otherwise it is not required. It should be the full name of the juicer_tools.
+#' # juicer_tools<-NULL
+#'
 #' # define the binsize. Default=40000 (40Kb). Other recommended bin sizes are 10000 (10Kb) and 20000 (20Kb).
 #' binsize<-40000
 #' 
@@ -98,7 +102,7 @@
 #' 
 #' @export
 
-FIREcaller <- function(file.list, gb, map_file, nchrom=0, chroms_file=NULL, binsize=40000, upper_cis=200000,normalized=FALSE, rm_mhc = TRUE,rm_EBL=TRUE, rm_perc=0.25, dist='poisson',alpha=0.05, plots=FALSE,diff_fires=FALSE){
+FIREcaller <- function(file.list, gb, map_file, nchrom=0, chroms_file=NULL, juicer_tools_version=NULL, binsize=40000, upper_cis=200000,normalized=FALSE, rm_mhc = TRUE,rm_EBL=TRUE, rm_perc=0.25, dist='poisson',alpha=0.05, plots=FALSE,diff_fires=FALSE){
 
   #reference files
   options(scipen = 999)
@@ -134,6 +138,9 @@ FIREcaller <- function(file.list, gb, map_file, nchrom=0, chroms_file=NULL, bins
   }
   
   if(str_count(temp,".hic")==1){
+    if(is.null(juicer_tools_version)){
+      stop('The version of your juicer_tools needs to be provided!')
+    }
     prefix.list<-unique(str_split_fixed(file.list,".hic",2)[,1])
   }
 
@@ -151,7 +158,7 @@ FIREcaller <- function(file.list, gb, map_file, nchrom=0, chroms_file=NULL, bins
   
   #(1C) hic
   if(str_count(temp,".hic")==1){
-    t <- cis_all_hic_sample(gb,nchrom,chrom_size,binsize,bin_num,file.list,ref_file,prefix.list)
+    t <- cis_all_hic_sample(gb,nchrom,chrom_size,juicer_tools_version,binsize,bin_num,file.list,ref_file,prefix.list)
   }
 
   #(2) filtering
@@ -235,18 +242,18 @@ cis_single_chr <- function(prefix.list, chr, bin_num,ref_file){
 #####################################################################################
 # Functions for FIRE caller with .hic samples to prepare for calc_cis()
 #####################################################################################
-cis_all_hic_sample<-function(gb,nchrom,chrom_size,binsize,bin_num,file.list,ref_file,prefix.list){
+cis_all_hic_sample<-function(gb,nchrom,chrom_size,juicer_tools_version,binsize,bin_num,file.list,ref_file,prefix.list){
   t2<-ref_file
   for(i in 1:length(file.list)){
     file<-file.list[i]
-    t<-cis_hic_sample(file,binsize, gb,ref_file,bin_num)
+    t<-cis_hic_sample(file,gb,nchrom,chrom_size,juicer_tools_version,binsize,bin_num,ref_file)
   }
   t2<-merge(t2, t, by = c("chr", "start", "end", "F", "GC", "M","EBL"), sort = FALSE, all = TRUE)
   colnames(t2)<-c("chr","start","end","F","GC","M","EBL",prefix.list)
   return(t2)
 }
 
-cis_hic_sample<-function(file,binsize,gb,nchrom,chrom_size,ref_file,bin_num){
+cis_hic_sample<-function(file,gb,nchrom,chrom_size,juicer_tools_version,binsize,bin_num,ref_file){
   
   if(gb %in% c('mm9','mm10')){
     chroms <- paste0("chr", c(1:19, "X"))
@@ -269,8 +276,8 @@ cis_hic_sample<-function(file,binsize,gb,nchrom,chrom_size,ref_file,bin_num){
   
   for(chrom in chroms){
     name.out<-paste0(name,"_",chrom,".txt")
-    #juicer_dir<-system.file("extdata","juicer_tools_1.21.01.jar",package="FIREcaller")
-    juicer <- "java -jar juicer_tools_1.21.01.jar"
+    #juicer_dir<-system.file("extdata","juicer_tools.2.20.00.ac.jar",package="FIREcaller")
+    juicer <- paste("java -jar",juicer_tools_version)
     juicer_command <- paste(juicer, "dump observed NONE", input, chrom, chrom, "BP", binsize, name.out)
     print(juicer_command)
     system(juicer_command)

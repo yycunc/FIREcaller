@@ -67,7 +67,7 @@ setwd('~/Desktop/FIREcaller_example')
 
 #### Hi-C input file
 
-As default, The Hi-C input file *file.list* is defined according to the naming convention of the NxN matrices. The HiC Input files need to be sample and chromosome-specific NxN contact frequency matrix with no row name and no column name.The files for the contact matrices must have the naming convention "{prefix}\_chr{number}.gz". For .hic and .cool files, it should be {sample}.cool or {sample}.hic. For .hic files, juicer is required and needs to be downloaded first, and the version of your juicer_tools needs to be provided later as a parameter.
+As default, The Hi-C input file *file.list* is defined according to the naming convention of the NxN matrices. The HiC Input files need to be sample and chromosome-specific NxN contact frequency matrix with no row name and no column name.The files for the contact matrices must have the naming convention "{prefix}\_chr{number}.gz". For .hic and .cool files, it should be {sample}.cool or {sample}.hic. For .hic file, juicer is required and needs to be downloaded first, and the version of your juicer_tools needs to be provided later as a parameter.
 
 ```{r define the prefix.list according to the naming convention of the NxN matrices, warning=FALSE}
 file.list <- paste0('Hippo_chr', 1:22, '.gz')

@@ -65,7 +65,7 @@
 #' chroms_file<-NULL
 #'
 #' # define the version of juicer_tools if the input file is in .hic format, otherwise it is not required. It should be the full name of the juicer_tools.
-#' # juicer_tools<-NULL
+#' # juicer_tools_version<-NULL
 #'
 #' # define the binsize. Default=40000 (40Kb). Other recommended bin sizes are 10000 (10Kb) and 20000 (20Kb).
 #' binsize<-40000

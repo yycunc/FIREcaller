@@ -6,7 +6,8 @@ FIREcaller is maintained by Cheynna Crowley [cacrowle@live.unc.edu], Yuchen Yang
 ## News and Updates
 Nov 3, 2022
 * Version 1.42
-  + Allows users to perform FIREcaller on data of genome build other than hg19, GRCh38, mm9 and mm10, with a file of chromosome size being provided.
+  + Allows user to perform FIREcaller on data of genome build other than hg19, GRCh38, mm9 and mm10, with a file of chromosome size being provided.
+  + Allows user to input their own version of juicer_tools for .hic format data.
 
 Nov 21, 2021
 * Version 1.40
@@ -66,7 +67,7 @@ setwd('~/Desktop/FIREcaller_example')
 
 #### Hi-C input file
 
-As default, The Hi-C input file *file.list* is defined according to the naming convention of the NxN matrices. The HiC Input files need to be sample and chromosome-specific NxN contact frequency matrix with no row name and no column name.The files for the contact matrices must have the naming convention "{prefix}\_chr{number}.gz". For .hic and .cool files, it should be {sample}.cool or {sample}.hic. For .hic files, juicer is required and needs to be downloaded first.
+As default, The Hi-C input file *file.list* is defined according to the naming convention of the NxN matrices. The HiC Input files need to be sample and chromosome-specific NxN contact frequency matrix with no row name and no column name.The files for the contact matrices must have the naming convention "{prefix}\_chr{number}.gz". For .hic and .cool files, it should be {sample}.cool or {sample}.hic. For .hic files, juicer is required and needs to be downloaded first, and the version of your juicer_tools needs to be provided later as a parameter.
 
 ```{r define the prefix.list according to the naming convention of the NxN matrices, warning=FALSE}
 file.list <- paste0('Hippo_chr', 1:22, '.gz')
@@ -129,6 +130,13 @@ If gb is one of hg19, GRCh38, mm9 and mm10, chromosome size file and the number 
 ```{r define the number of chromosomes and the name of chromosome size file}
 nchrom <- 23
 chroms_file <- NULL
+```
+
+#### Define the version of juicer_tools if input file is in .hic format
+If the input file is in .hic format, the full name of juicer_tools needs to be provided. For example, "juicer_tools.2.20.00.ac.jar". For other format of input file, it is not required.
+
+```{r define the juicer_tools_version,warning=FALSE}
+juicer_tools_version <- NULL
 ```
 
 #### Define the bin size
@@ -219,7 +227,7 @@ diff_fires <- FALSE
 Using FIREcaller function, we call both FIREs and super-FIREs for 22 autosomes of Hippocampus dataset.
   
 ```{r call FIRE and super-FIRE for 22 autosomes of Hippocampus dataset}
-FIREcaller(file.list, gb, map_file, nchrom, chroms_file=NULL, binsize = 40000, upper_cis = 200000, normalized = FALSE, rm_mhc = TRUE, 
+FIREcaller(file.list, gb, map_file, nchrom, chroms_file=NULL, juicer_tools_version=NULL, binsize = 40000, upper_cis = 200000, normalized = FALSE, rm_mhc = TRUE, 
            rm_EBL = TRUE, rm_perc = 0.25, dist = 'poisson', alpha = 0.05, plots = FALSE, diff_fires = FALSE)
 ```
 

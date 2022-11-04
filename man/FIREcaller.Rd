@@ -4,7 +4,7 @@
 \alias{FIREcaller}
 \title{FIREcaller: an R package for detecting frequently interacting regions from Hi-C data}
 \usage{
-FIREcaller(file.list=(...), gb=c("hg19","GRCh38","mm9","mm10",""), map_file="", nchrom=0, chroms_file="", binsize=c(10000,20000,40000),upper_cis=200000, normalized=c("TRUE","FALSE"),filter=c("TRUE","FALSE"),rm_mhc=c("TRUE","FALSE"),rm_EBL=c("TRUE","FALSE"), rm_perc=0.25, dist=c('poisson','nb'),alpha=0.05,diff_fires=c('TRUE','FALSE'))
+FIREcaller(file.list=(...), gb=c("hg19","GRCh38","mm9","mm10",""), map_file="", nchrom=0, chroms_file="", juicer_tools_version=NULL, binsize=c(10000,20000,40000),upper_cis=200000, normalized=c("TRUE","FALSE"),filter=c("TRUE","FALSE"),rm_mhc=c("TRUE","FALSE"),rm_EBL=c("TRUE","FALSE"), rm_perc=0.25, dist=c('poisson','nb'),alpha=0.05,diff_fires=c('TRUE','FALSE'))
 }
 \arguments{
 \item{file.list}{a list of files used for FIREcaller. If in .gz format, the naming convention is ${prefix}.chr${chr#}.gz. If in .cool format, the naming convention is ${prefix}.cool.}
@@ -16,6 +16,8 @@ FIREcaller(file.list=(...), gb=c("hg19","GRCh38","mm9","mm10",""), map_file="", 
 \item{nchrom}{a numeric value for the number of chromosomes. If gb is in c("hg19","GRCh38","mm9","mm10"), nchrom can be omitted, otherwise it must be provided.}
                                                                                                                 
 \item{chroms_file}{a string that defines the name of the file including the size of each chromosome of the genome build type. If gb is in c("hg19","GRCh38","mm9","mm10"), chroms_file can be omitted, otherwise it must be provided. See read me for format.}
+ 
+\item{juicer_tools_version}{a string that defines the version of juicer_tools. If the input file is in .hic format, it must be provided. It should be the full name of juicer_tools file name. For example: "juicer_tools.2.20.00.ac.jar".}                                                                                                               
                                                                                                                 
 \item{binsize}{a numeric value for the binsize. Default is 40000 (40Kb) with other options being 10Kb or 20Kb.}
 
@@ -73,6 +75,9 @@ nchrom<-23
     
 # define the name of the chromosome size file (can be omitted in this example since the package has included the chromosome size data for genome build 'hg19')
 # chroms_file<-NULL
+  
+# define the version of juicer_tools if the input file is in .hic format, otherwise it is not required. It should be the full name of the juicer_tools.
+# juicer_tools_version<-NULL
 
 # define the binsize. Default=40000 (40Kb). Other recommended bin sizes are 10000 (10Kb) and 20000 (20Kb).
 binsize<-40000
@@ -105,7 +110,7 @@ plots<-FALSE
 diff_fires<-FALSE
 
 # run the function
-FIREcaller(file.list, gb, map_file, nchrom, chroms_file=NULL, binsize=40000, upper_cis=200000,normalized=FALSE, rm_mhc = TRUE,rm_EBL=TRUE, rm_perc=0.25, dist='poisson',alpha=0.05, plots=FALSE,diff_fires=FALSE)
+FIREcaller(file.list, gb, map_file, nchrom, chroms_file=NULL, juicer_tools_version=NULL, binsize=40000, upper_cis=200000,normalized=FALSE, rm_mhc = TRUE,rm_EBL=TRUE, rm_perc=0.25, dist='poisson',alpha=0.05, plots=FALSE,diff_fires=FALSE)
 
 }
 \references{
